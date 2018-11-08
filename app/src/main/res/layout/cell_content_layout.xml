@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#cccccc"
+    android:orientation="vertical"
+    android:visibility="gone">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="@color/google_blue"
+        android:paddingBottom="7dp"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
+        android:paddingTop="7dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="鹏达总排口"
+            android:textColor="@android:color/white"
+            android:textSize="20sp"
+            android:id="@+id/textView" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/textView"
+            android:layout_marginTop="10dp"
+            android:text="所属企业：河北鹏达食品"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:id="@+id/textView2" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/textView2"
+            android:text="最新采集时间：2018-05-11 17:18:00"
+            android:textColor="@android:color/white"
+            android:textSize="16sp" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="2dp"
+        android:background="#cccccc"
+        android:orientation="vertical"
+        android:paddingBottom="6dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="9dp">
+
+        <!-- avatar and name part -->
+        <RelativeLayout
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#d75d20">
+            <TextView
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignStart="@+id/textView4"
+                android:text="流 量" />
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/textView3"
+                android:layout_marginStart="19dp"
+                android:layout_marginTop="9dp"
+                android:text="10.970"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/textView3"
+                android:layout_alignBottom="@+id/textView3"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="26dp"
+                android:text="排 水 量"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textView11"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/textView4"
+                android:layout_alignBottom="@+id/textView4"
+                android:layout_alignEnd="@+id/textView5"
+                android:text="10.970"
+                android:textSize="14sp" />
+
+        </RelativeLayout>
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginBottom="6dp"
+            android:layout_marginTop="9dp"
+            android:src="#e0e0e0" />
+
+
+
+           <TableLayout
+               android:baselineAligned="false"
+               android:background="#32a4c1"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content">
+               <TableRow>
+                   <TextView
+                       android:gravity="center"
+                       android:textSize="15sp"
+                       android:textStyle="bold"
+                       android:text="COD"
+
+                       android:layout_height="wrap_content"
+                       android:layout_weight="1"
+                       android:layout_width="0dp"
+                       />
+                   <TextView
+                       android:gravity="center"
+                       android:textSize="15sp"
+                       android:textStyle="bold"
+                       android:text="COD排放量"
+                       android:layout_height="wrap_content"
+                       android:layout_weight="1"
+                       android:layout_width="0dp"
+                       />
+                   <TextView
+                       android:gravity="center"
+                       android:textSize="15sp"
+                       android:textStyle="bold"
+                       android:text="NH3N"
+                       android:layout_height="wrap_content"
+                       android:layout_weight="1"
+                       android:layout_width="0dp"
+                       />
+                   <TextView
+                       android:gravity="center"
+                       android:textSize="15sp"
+                       android:textStyle="bold"
+                       android:text="NH3N排放量"
+                       android:layout_height="wrap_content"
+                       android:layout_weight="1"
+                       android:layout_width="0dp"
+                       />
+               </TableRow>
+               <TableRow>
+                   <TextView
+                       android:gravity="center"
+                       android:layout_weight="1"
+                       android:layout_width="0dp"
+                       android:layout_height="wrap_content"
+                       android:text="10.970"
+                       android:textSize="14sp" />
+                   <TextView
+                       android:gravity="center"
+                       android:layout_weight="1"
+                       android:layout_width="0dp"
+                       android:layout_height="wrap_content"
+                       android:text="10.970"
+                       android:textSize="14sp" />
+                   <TextView
+                       android:gravity="center"
+                       android:layout_weight="1"
+                       android:layout_width="0dp"
+                       android:layout_height="wrap_content"
+
+                       android:text="10.970"
+                       android:textSize="14sp" />
+                   <TextView
+                       android:gravity="center"
+                       android:layout_weight="1"
+                       android:layout_width="0dp"
+                       android:layout_height="wrap_content"
+
+                       android:text="10.970"
+                       android:textSize="14sp" />
+               </TableRow>
+           </TableLayout>
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginBottom="6dp"
+            android:layout_marginTop="9dp"
+            android:src="#e0e0e0" />
+
+        <TableLayout
+            android:background="#00ff00"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TableRow>
+                <TextView
+                    android:gravity="center"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:text="阀门控制方式"
+
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    />
+                <TextView
+                    android:gravity="center"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:text="阀门状态"
+
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    />
+            </TableRow>
+            <TableRow>
+                <TextView
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="自动控制"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+
+                    android:text="开门到位"
+                    android:textSize="14sp" />
+            </TableRow>
+        </TableLayout>
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginBottom="3dp"
+            android:layout_marginTop="3dp"
+            android:src="#e0e0e0" />
+
+        <TextView
+            android:id="@+id/content_request_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="#ffbf12"
+            android:padding="10dp"
+            android:text="查询历史记录"
+            android:textAlignment="center"
+            android:textColor="#343d43"
+            android:textSize="20sp" />
+    </LinearLayout>
+
+</LinearLayout>

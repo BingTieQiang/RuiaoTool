@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:paddingTop="5dp"
+    android:paddingLeft="15dp"
+    android:paddingBottom="15dp"
+    android:paddingRight="15dp"
+    android:background="@android:color/transparent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+    <RelativeLayout
+
+        android:background="@android:color/transparent"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:textColor="@color/white"
+            android:id="@+id/tv_ic_name"
+            android:background="@android:color/transparent"
+            android:text="PM2.5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:textColor="@color/white"
+            android:id="@+id/tv_ic_num"
+            android:layout_alignParentRight="true"
+            android:background="@android:color/transparent"
+            android:text="0.1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:paddingTop="5dp"
+        android:background="@android:color/transparent"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:textColor="@color/word_bg"
+            android:background="@android:color/transparent"
+            android:text="单位"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:textColor="@color/word_bg"
+            android:id="@+id/tv_ic_unit"
+            android:layout_alignParentRight="true"
+            android:background="@android:color/transparent"
+            android:text="0.1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+    <View
+        android:background="@color/word_bg1"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"/>
+</LinearLayout>

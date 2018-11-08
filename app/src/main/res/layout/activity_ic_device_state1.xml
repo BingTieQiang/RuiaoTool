@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.ruiao.tools.ic_card.IcDeviceStateActivity">
+    <LinearLayout
+
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/padding_top"
+            android:background="@color/chart_bg_1" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/chart_bg">
+
+            <TextView
+                android:id="@+id/tv_city"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="设备状态"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+        </RelativeLayout>
+       <ListView
+           android:id="@+id/listview"
+           android:background="@mipmap/background"
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"
+           android:clipChildren="false"
+           android:clipToPadding="false"
+           android:divider="@android:color/transparent"
+           android:dividerHeight="10dp"
+           android:paddingBottom="16dp"
+           android:paddingLeft="16dp"
+           android:paddingRight="16dp"
+           android:paddingTop="16dp"
+           android:scrollbars="none"
+           >
+
+
+       </ListView>
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>
