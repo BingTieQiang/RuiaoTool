@@ -77,7 +77,10 @@
         <activity
             android:name=".ic_card.IcCardActivity"
             android:theme="@style/Theme.AppCompat" />
-        <activity android:name=".advertisement.AdActivity" />
+        <activity android:name=".advertisement.AdActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppMainTheme"
+            />
         <activity android:name=".notice.NoticeActivity" />
 
         <service
@@ -138,7 +141,10 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppMainTheme" />
         <activity android:name=".youyan.YouyanActivity" />
-        <activity android:name=".alarm.AlarmActivity"></activity>
+        <activity android:name=".alarm.AlarmActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppMainTheme"
+            />
     </application>
 
 </manifest>

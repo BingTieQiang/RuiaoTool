@@ -1,122 +1,192 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.ruiao.tools.alarm.AlarmActivity">
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/padding_top"
-            android:background="@color/chart_bg_1" />
 
-        <RelativeLayout
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/padding_top"
+        android:background="@color/chart_bg_1" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/chart_bg">
+
+        <TextView
+            android:id="@+id/tv_city"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="报警详细"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+
+
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingRight="20dp"
+        android:paddingLeft="20dp"
+        android:paddingTop="20dp"
+        android:orientation="vertical">
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@color/chart_bg">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/tv_city"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:text="报警详细"
-                android:textColor="@color/white"
+                android:layout_height="match_parent"
+                android:text="设备名称:"
                 android:textSize="18sp" />
 
-
-        </RelativeLayout>
-        <LinearLayout
-            android:layout_marginRight="20dp"
-            android:orientation="vertical"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="20dp"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <LinearLayout
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:textSize="18sp"
-                    android:text="时间:"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-                <TextView
-                    android:textSize="18sp"
-                    android:text="2018年11月一号"
-                    android:layout_marginLeft="20dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
-            <view
-                android:layout_width="match_parent"
-                android:layout_height="1dp"/>
-            <LinearLayout
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:textSize="18sp"
-                    android:text="地点:"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-                <TextView
-                    android:layout_marginLeft="20dp"
-                    android:textSize="18sp"
-                    android:text="地点"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
-            <view
-                android:layout_width="match_parent"
-                android:layout_height="1dp"/>
-            <LinearLayout
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:textSize="18sp"
-                    android:text="设备："
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-                <TextView
-                    android:layout_marginLeft="20dp"
-                    android:textSize="18sp"
-                    android:text="地点:"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
-            <view
-                android:layout_width="match_parent"
-                android:layout_height="1dp"/>
-            <LinearLayout
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:textSize="18sp"
-                    android:text="设备号："
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-                <TextView
-                    android:layout_marginLeft="20dp"
-                    android:textSize="18sp"
-                    android:text="地点"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
-            <view
-                android:layout_width="match_parent"
-                android:layout_height="1dp"/>
+            <TextView
+                android:id="@+id/dev_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:text=""
+                android:textSize="18sp" />
         </LinearLayout>
+        <LinearLayout
+            android:background="#cccccc"
+            android:layout_width="match_parent"
+            android:layout_height="1dp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="所属企业:"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/dev_gongsi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:text=""
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:background="#cccccc"
+            android:layout_width="match_parent"
+            android:layout_height="1dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="超标时间:"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/tv_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:text=""
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:background="#cccccc"
+            android:layout_width="match_parent"
+            android:layout_height="1dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="污染物名称:"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/tv_wuranwu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:text=""
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:background="#cccccc"
+            android:layout_width="match_parent"
+            android:layout_height="1dp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="超标数值:"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/tv_chaobaio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:text=""
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:background="#cccccc"
+            android:layout_width="match_parent"
+            android:layout_height="1dp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="国家标准:"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/tv_stand"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:text=""
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:background="#cccccc"
+            android:layout_width="match_parent"
+            android:layout_height="1dp" />
     </LinearLayout>
-</android.support.constraint.ConstraintLayout>
+
+
+</LinearLayout>

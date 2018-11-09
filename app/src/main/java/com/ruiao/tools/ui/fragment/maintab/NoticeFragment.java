@@ -1,6 +1,7 @@
 package com.ruiao.tools.ui.fragment.maintab;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -16,6 +17,8 @@ import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.ruiao.tools.R;
+import com.ruiao.tools.about.AboutActivity;
+import com.ruiao.tools.alarm.AlarmActivity;
 import com.ruiao.tools.notice.NoticeBean;
 import com.ruiao.tools.ui.base.BaseFragment;
 import com.ruiao.tools.url.URLConstants;
@@ -38,12 +41,13 @@ import butterknife.BindView;
  */
 
 public class NoticeFragment extends BaseFragment {
-
+    private ArrayList<com.ruiao.tools.notice.NoticeBean> mDataList = new ArrayList<>();
     @BindView(R.id.listview)
     XRecyclerView recyclerview;
-    private int Page = 0;
+    private int Page = 1;
     private int Rows = 7;
     DataAdapter adapter = null;
+
     @Override
     protected int getContentViewID() {
         return R.layout.fragment_notice;
@@ -52,8 +56,6 @@ public class NoticeFragment extends BaseFragment {
     @Override
     protected void initViewsAndEvents(View rootView, Bundle savedInstanceState) {
         initView();
-//        initData();
-
         upData();
     }
 
@@ -73,21 +75,20 @@ public class NoticeFragment extends BaseFragment {
 //        adapter = new DataAdapter(mContext);
 //        recyclerview.setAdapter(adapter);
 
-        adapter = new DataAdapter(mContext);
+        adapter = new DataAdapter(mContext, mDataList);
         recyclerview.setAdapter(adapter);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(mContext );
+        LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);
         //设置布局管理器
         recyclerview.setLayoutManager(layoutManager);
         //设置分割符号
 
         //禁止加载更多
-        recyclerview.setLoadingMoreEnabled(false);
-        adapter.setDate();
+        recyclerview.setLoadingMoreEnabled(true);
 
         recyclerview.setLoadingListener(new XRecyclerView.LoadingListener() {
             @Override
             public void onRefresh() {
-                Page = 0;
+                Page = 1;
                 upData();
             }
 
@@ -98,15 +99,15 @@ public class NoticeFragment extends BaseFragment {
         });
 
     }
+
     //Page 页数  Rows每页几行
     public void upData() {
-
         RequestParams pa = new RequestParams();
         pa.put("username", SPUtils.get(getContext(), "username", ""));
         pa.put("Page", Page);
         pa.put("Rows", Rows);
         Page++;
-        AsynHttpTools.httpGetMethodByParams(URLConstants.WarnData, pa, new JsonHttpResponseHandler("GB2312"){
+        AsynHttpTools.httpGetMethodByParams(URLConstants.WarnData, pa, new JsonHttpResponseHandler("GB2312") {
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 throwable.printStackTrace();
@@ -115,9 +116,9 @@ public class NoticeFragment extends BaseFragment {
             @Override
             public void onFinish() {
                 super.onFinish();
-                if( Page == 1){
+                if (Page == 2) {
                     recyclerview.refreshComplete();
-                }else{
+                } else {
                     recyclerview.loadMoreComplete();
                 }
 
@@ -129,13 +130,26 @@ public class NoticeFragment extends BaseFragment {
 
                 throwable.printStackTrace();
             }
+
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
 
                 try {
                     if (response.getBoolean("success")) {
+                        if (Page == 2) {
+                            mDataList.clear();
+                        }
+                        JSONArray array = response.getJSONArray("报警数据");
+                        for (int i = 0; i < array.length(); i++) {
+                            NoticeBean bean;
+                            JSONObject onj = array.getJSONObject(i);
+                            bean = new NoticeBean(onj.getString("污染物名称"), onj.getString("设备名称"), onj.getString("超标时间"));
+                            bean.com = onj.getString("所属企业");
+                            bean.tvChaobaio = onj.getString("超标数值");
+                            bean.tvStand = onj.getString("国家标准");
 
-
+                            mDataList.add(bean);
+                        }
 
                     } else {
                         ToastHelper.shortToast(getContext(), response.getString("message"));
@@ -143,7 +157,9 @@ public class NoticeFragment extends BaseFragment {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                adapter.notifyDataSetChanged();
             }
+
         });
     }
 
@@ -153,55 +169,65 @@ public class NoticeFragment extends BaseFragment {
     }
 
     private class DataAdapter extends RecyclerView.Adapter {
-
+        private Context context;
         private LayoutInflater mLayoutInflater;
-        protected ArrayList<com.ruiao.tools.notice.NoticeBean> mDataList = new ArrayList<>();
+        private ArrayList<com.ruiao.tools.notice.NoticeBean> mDataList;
 
-        public DataAdapter(Context context) {
+        public DataAdapter(Context context, ArrayList<com.ruiao.tools.notice.NoticeBean> mDataList) {
             mLayoutInflater = LayoutInflater.from(context);
-            mContext = context;
+            this.context = context;
+            this.mDataList = mDataList;
         }
-        public void setDate()
-        {
-            mDataList.clear();
 
-            for ( int i = 0;i<1;i++)
-            {
-                mDataList.add(new NoticeBean("通知功能暂未开通" ,"尽请期待"));
-            }
-
-            notifyDataSetChanged();
-        }
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            return new ViewHolder(mLayoutInflater.inflate(R.layout.item_message, parent, false));
+            ViewHolder viewHolder = new ViewHolder(mLayoutInflater.inflate(R.layout.item_message, parent, false));
+//            viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    Intent intent = new Intent(context, AlarmActivity.class);
+//                    intent.putExtra("bean",mDataList)
+//                    context .startActivity(intent);
+//                }
+//            });
+            return viewHolder;
         }
 
         @Override
-        public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
             ViewHolder viewHolder = (ViewHolder) holder;
-            viewHolder.title.setText(mDataList.get(position).title);
+            viewHolder.title.setText(mDataList.get(position).title + "报警");
             viewHolder.context.setText(mDataList.get(position).msg);
+            viewHolder.time.setText(mDataList.get(position).time);
+            viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, AlarmActivity.class);
+                    intent.putExtra("bean", mDataList.get(position));
+                    context.startActivity(intent);
+                }
+            });
         }
 
         @Override
         public int getItemCount() {
-            Log.d("123",""+mDataList.size());
+            Log.d("123", "" + mDataList.size());
             return mDataList.size();
 
         }
-
 
 
         private class ViewHolder extends RecyclerView.ViewHolder {
 
             private TextView title;
             private TextView context;
+            private TextView time;
 
             public ViewHolder(View itemView) {
                 super(itemView);
                 title = (TextView) itemView.findViewById(R.id.tv_message_title);
                 context = (TextView) itemView.findViewById(R.id.tv_message_context);
+                time = (TextView) itemView.findViewById(R.id.tv_message_time);
             }
         }
     }
