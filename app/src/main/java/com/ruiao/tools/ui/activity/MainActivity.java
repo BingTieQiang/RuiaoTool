@@ -531,9 +531,10 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
         changeFragment(0);
         GTNotificationMessage message = (GTNotificationMessage) msg.obj;
         String title = message.getTitle();
-        changeFragment(0);
-        NoticeFragment fag = (NoticeFragment) getSupportFragmentManager().getPrimaryNavigationFragment();
-        fag.upData();
+//        NoticeFragment fag = (NoticeFragment) getSupportFragmentManager().getPrimaryNavigationFragment();
+//        fag.upData();
+        currentFragment.getmsg();
+
 
     }
 
@@ -542,7 +543,7 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
         RequestParams pa = new RequestParams();
         pa.put("username",SPUtils.get(context, "username", ""));
         pa.put("cid", cid);
-        AsynHttpTools.httpGetMethodByParams(URLConstants.VERSION, pa, new JsonHttpResponseHandler("GB2312"){
+        AsynHttpTools.httpGetMethodByParams(URLConstants.CID, pa, new JsonHttpResponseHandler("GB2312"){
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 super.onFailure(statusCode, headers, responseString, throwable);

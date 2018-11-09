@@ -29,6 +29,7 @@ public class URLConstants {
 //    public static String REFRESHTOKEN = MBASE+"api/refresh";
 //    public static String LOGOUT = MBASE+"loginOut";
     public static String VERSION = MBASE+"version.asp";
+    public static String WarnData = MBASE+"WarnData.asp";
 //    public static String SCANDOWNLOAD = BASE+"api/template/qrCodeDownload";//扫码下载地址
 //    public static String SCANUPLOAD = BASE+"api/template/upload";//扫码上传
 //    public static String DOWNAPP = BASE+"api/template/upload";//下载APP接口

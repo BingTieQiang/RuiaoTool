@@ -137,7 +137,8 @@
             android:name=".wuran.WuRanChartActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppMainTheme" />
-        <activity android:name=".youyan.YouyanActivity"></activity>
+        <activity android:name=".youyan.YouyanActivity" />
+        <activity android:name=".alarm.AlarmActivity"></activity>
     </application>
 
 </manifest>

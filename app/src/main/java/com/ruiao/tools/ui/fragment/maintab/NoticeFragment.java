@@ -2,6 +2,8 @@ package com.ruiao.tools.ui.fragment.maintab;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -18,6 +20,7 @@ import com.ruiao.tools.notice.NoticeBean;
 import com.ruiao.tools.ui.base.BaseFragment;
 import com.ruiao.tools.url.URLConstants;
 import com.ruiao.tools.utils.AsynHttpTools;
+import com.ruiao.tools.utils.PackageUtils;
 import com.ruiao.tools.utils.SPUtils;
 import com.ruiao.tools.utils.ToastHelper;
 
@@ -35,9 +38,11 @@ import butterknife.BindView;
  */
 
 public class NoticeFragment extends BaseFragment {
+
     @BindView(R.id.listview)
     XRecyclerView recyclerview;
-
+    private int Page = 0;
+    private int Rows = 7;
     DataAdapter adapter = null;
     @Override
     protected int getContentViewID() {
@@ -48,6 +53,7 @@ public class NoticeFragment extends BaseFragment {
     protected void initViewsAndEvents(View rootView, Bundle savedInstanceState) {
         initView();
 //        initData();
+
         upData();
     }
 
@@ -73,16 +79,34 @@ public class NoticeFragment extends BaseFragment {
         //设置布局管理器
         recyclerview.setLayoutManager(layoutManager);
         //设置分割符号
+
+        //禁止加载更多
         recyclerview.setLoadingMoreEnabled(false);
         adapter.setDate();
 
-    }
+        recyclerview.setLoadingListener(new XRecyclerView.LoadingListener() {
+            @Override
+            public void onRefresh() {
+                Page = 0;
+                upData();
+            }
 
+            @Override
+            public void onLoadMore() {
+                upData();
+            }
+        });
+
+    }
+    //Page 页数  Rows每页几行
     public void upData() {
+
         RequestParams pa = new RequestParams();
         pa.put("username", SPUtils.get(getContext(), "username", ""));
-        pa.put("cid", "");
-        AsynHttpTools.httpGetMethodByParams(URLConstants.VERSION, pa, new JsonHttpResponseHandler("GB2312"){
+        pa.put("Page", Page);
+        pa.put("Rows", Rows);
+        Page++;
+        AsynHttpTools.httpGetMethodByParams(URLConstants.WarnData, pa, new JsonHttpResponseHandler("GB2312"){
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 throwable.printStackTrace();
@@ -91,6 +115,13 @@ public class NoticeFragment extends BaseFragment {
             @Override
             public void onFinish() {
                 super.onFinish();
+                if( Page == 1){
+                    recyclerview.refreshComplete();
+                }else{
+                    recyclerview.loadMoreComplete();
+                }
+
+
             }
 
             @Override
@@ -114,6 +145,11 @@ public class NoticeFragment extends BaseFragment {
                 }
             }
         });
+    }
+
+    @Override
+    public void getmsg() {
+        upData();
     }
 
     private class DataAdapter extends RecyclerView.Adapter {

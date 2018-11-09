@@ -316,4 +316,9 @@ public class MineFragment extends BaseFragment implements EasyPermissions.Permis
         // EasyPermissions handles the request result.
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
     }
+
+    @Override
+    public void getmsg() {
+
+    }
 }

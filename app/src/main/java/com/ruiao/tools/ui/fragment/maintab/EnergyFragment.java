@@ -120,5 +120,8 @@ public class EnergyFragment extends BaseFragment {
     }
 
 
+    @Override
+    public void getmsg() {
 
+    }
 }

@@ -6,13 +6,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.ruiao.tools.ui.activity.MsgCoe;
+
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 /**
  * Created by Gs on 2016/5/23.
  */
-public abstract class BaseFragment extends AbsBaseFragment {
+public abstract class BaseFragment extends AbsBaseFragment implements MsgCoe{
     protected Unbinder unbinder;
     protected boolean isActive;
 

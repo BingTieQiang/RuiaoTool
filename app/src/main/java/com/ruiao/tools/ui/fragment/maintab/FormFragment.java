@@ -83,4 +83,9 @@ public class FormFragment extends BaseFragment{
             contentList.add(data);
         }
     }
+
+    @Override
+    public void getmsg() {
+
+    }
 }

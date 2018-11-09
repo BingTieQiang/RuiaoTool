@@ -47,4 +47,9 @@ public class DataFragment extends BaseFragment {
         smartTabLayout.setViewPager(viewPager);
 
     }
+
+    @Override
+    public void getmsg() {
+
+    }
 }

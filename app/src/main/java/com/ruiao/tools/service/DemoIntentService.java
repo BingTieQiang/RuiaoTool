@@ -72,6 +72,8 @@ public class DemoIntentService extends GTIntentService {
         msgx.what = 11;
         msgx.obj = msg;
         Application.sendMessage(msgx);
+
+
     }
 
 

@@ -150,5 +150,8 @@ public class DataMainFragment extends BaseFragment {
     }
 
 
+    @Override
+    public void getmsg() {
 
+    }
 }
