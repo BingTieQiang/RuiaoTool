@@ -14,6 +14,7 @@ import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.formatter.IValueFormatter;
 import com.github.mikephil.charting.utils.ViewPortHandler;
+import com.ruiao.tools.utils.SPUtils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -41,6 +42,14 @@ public class LineChartManager {
     YAxis rightYAxis = null;
     YAxis leftYAxis;
     LineData data;
+    int address = 0; //地址 1表示晋州
+    public void setAddress ( int address)
+    {
+        this.address = address;
+
+    }
+
+
     public LineChartManager(LineChart mLineChart) {
         this.mLineChart = mLineChart;
         bigList.add(new ArrayList<Entry>());
@@ -135,10 +144,13 @@ public class LineChartManager {
             bigList.get(1).add(new Entry(i,Float.parseFloat(beans.get(i).cods)));
             bigList.get(2).add(new Entry(i,Float.parseFloat(beans.get(i).nh3n)));
             bigList.get(3).add(new Entry(i,Float.parseFloat(beans.get(i).nh3ns)));
-            bigList.get(4).add(new Entry(i,Float.parseFloat(beans.get(i).lin)));
-            bigList.get(5).add(new Entry(i,Float.parseFloat(beans.get(i).linpaifan)));
-            bigList.get(6).add(new Entry(i,Float.parseFloat(beans.get(i).dan)));
-            bigList.get(7).add(new Entry(i,Float.parseFloat(beans.get(i).danpaifang)));
+            if(address != 1){  //晋州没有此数据
+                bigList.get(4).add(new Entry(i,Float.parseFloat(beans.get(i).lin)));
+                bigList.get(5).add(new Entry(i,Float.parseFloat(beans.get(i).linpaifan)));
+                bigList.get(6).add(new Entry(i,Float.parseFloat(beans.get(i).dan)));
+                bigList.get(7).add(new Entry(i,Float.parseFloat(beans.get(i).danpaifang)));
+            }
+
             bigList.get(8).add(new Entry(i,Float.parseFloat(beans.get(i).total)));
             bigList.get(9).add(new Entry(i,Float.parseFloat(beans.get(i).paishuiliang)));
 
@@ -176,7 +188,6 @@ public class LineChartManager {
                     return  (pos < beans.size()-1)?beans.get(pos).data:"";
                 }
 
-//                return mList[(int) value]; //mList为存有月份的集合
                 return  "";
             }
         });

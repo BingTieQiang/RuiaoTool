@@ -21,8 +21,8 @@ android {
         applicationId "com.ruiao.tools"
         minSdkVersion 19
         targetSdkVersion targetSdk
-        versionCode 9
-        versionName "V1.9"
+        versionCode 12
+        versionName "V2.2"
         multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         manifestPlaceholders = [

@@ -8,6 +8,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
@@ -49,8 +50,7 @@ public class ICActivity extends AppCompatActivity {
     private ArrayAdapter<String> dev_adapter;
     ArrayList<String> fac_list = new ArrayList<>();
     ArrayList<ArrayList<String>> dev_list = new ArrayList<>();
-    @BindView(R.id.radio2)
-    RadioGroup radio2;
+
     @BindView(R.id.tag_group)
     TagGroup tagGroup;
     private Pbdialog dialog; //进度条
@@ -60,14 +60,18 @@ public class ICActivity extends AppCompatActivity {
     TextView devName;
     @BindView(R.id.tv_newDate)
     TextView tvNewDate;
+    @BindView(R.id.tv_9)
+    TextView tv9;
+    @BindView(R.id.tv_10)
+    TextView tv10;
     @BindView(R.id.tv_p)
     TextView tvP;
-//    @BindView(R.id.tv_ps)
-//    TextView tvPs;
+    @BindView(R.id.tv_7)
+    TextView tv7;
+    @BindView(R.id.tv_8)
+    TextView tv8;
     @BindView(R.id.tv_n)
     TextView tvN;
-//    @BindView(R.id.tv_ns)
-//    TextView tvNs;
     private boolean ready = false;
     private boolean isDataReady = false;
     ArrayList<ArrayList<DevBean>> biglist = new ArrayList<>();
@@ -75,12 +79,10 @@ public class ICActivity extends AppCompatActivity {
     Date nowTime = new Date();
     @BindView(R.id.cod)
     TextView cod;
-//    @BindView(R.id.cods)
-//    TextView cods;
+    @BindView(R.id.ll_ll2)
+    LinearLayout ll_ll2;
     @BindView(R.id.nh3n)
     TextView nh3n;
-//    @BindView(R.id.nh3ns)
-//    TextView nh3ns;
     @BindView(R.id.famen_type)
     TextView famenType;
     @BindView(R.id.famen_stata)
@@ -93,8 +95,7 @@ public class ICActivity extends AppCompatActivity {
     TextView tvCity;
     @BindView(R.id.lineChart)
     LineChart barChart1;
-    @BindView(R.id.radio)
-    RadioGroup radio;
+
     private LineChartManager lineChartManager;
     private String[] arr = {"COD", "COD排放量", "NH₃N", "NH₃N排放量"};
     BarChartManager barChartManager1;
@@ -232,18 +233,34 @@ public class ICActivity extends AppCompatActivity {
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 try {
                     if (response.getBoolean("success")) {
-
-                        cod.setText("" + response.getDouble("COD"));
-//                        cods.setText("" + response.getDouble("COD排放量"));
-                        nh3n.setText("" + response.getDouble("NH3N"));
-//                        nh3ns.setText("" + response.getDouble("NH3N排放量"));
                         tvNewDate.setText("最新数据：刷新时间:" + response.getString("MonitorTime")+"(点击切换企业)");
-                        famenStata.setText("" + response.getString("阀门状态"));
-                        famenType.setText("" + response.getString("阀门控制方式"));
-                        tvN.setText("" + response.getDouble("总氮"));
+                        String base = (String)SPUtils.get(ICActivity.this,"BASE","");
+                        if(base.startsWith("http://222.222.220.218")){   //"晋州"
+                            tv9.setText("COD排放量");
+                            tv10.setText("NH3N排放量");
+                            cod.setText("" + response.getDouble("COD"));
+                            nh3n.setText("" + response.getDouble("NH3N"));
+                            famenStata.setText("" + response.getString("阀门状态"));
+                            famenType.setText("" + response.getString("阀门控制方式"));
+                            tvP.setText("" + response.getDouble("COD排放量"));
+                            tvN.setText("" + response.getDouble("NH3N排放量"));
+                            tv7.setText("" + response.getDouble("流量"));
+                            tv8.setText("" + response.getDouble("NH3N排放量"));
+                        }else{
+                            cod.setText("" + response.getDouble("COD"));
+//                        cods.setText("" + response.getDouble("COD排放量"));
+                            nh3n.setText("" + response.getDouble("NH3N"));
+//                        nh3ns.setText("" + response.getDouble("NH3N排放量"));
+
+                            famenStata.setText("" + response.getString("阀门状态"));
+                            famenType.setText("" + response.getString("阀门控制方式"));
+                            tvN.setText("" + response.getDouble("总氮"));
 //                        tvNs.setText("" + response.getDouble("总氮排放量"));
-                        tvP.setText("" + response.getDouble("总磷"));
+                            tvP.setText("" + response.getDouble("总磷"));
 //                        tvPs.setText("" + response.getDouble("总磷排放量"));
+                        }
+
+
 
                     } else {
                         ToastHelper.shortToast(ICActivity.this, response.getString("message"));
@@ -287,66 +304,77 @@ public class ICActivity extends AppCompatActivity {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                int address = 0; //1为晋州
                 // list 按照时间排列
                 ArrayList<IcBean1> beans = new ArrayList<>();
                 try {
-
+                    String base = (String)SPUtils.get(ICActivity.this,"BASE","");
+                    if(base.startsWith("http://222.222.220.218")){   //"晋州"
+                        address = 1;
+                    }
+                    lineChartManager.setAddress(address);
                     Boolean status = response.getBoolean("success");
                     if (status) {
-                        IcBean1 bean = null;
-                        JSONArray codarr = response.getJSONArray("COD");
-                        JSONArray codsarr = response.getJSONArray("COD排放量");
-                        JSONArray nh3sarr = response.getJSONArray("NH3N");
-                        JSONArray nh3ssarr = response.getJSONArray("NH3N排放量");
-                        JSONArray totalarr = response.getJSONArray("流量");
-                        JSONArray totalin = response.getJSONArray("总磷");
-                        JSONArray totalinpaifang = response.getJSONArray("总磷排放量");
-                        JSONArray totaldan = response.getJSONArray("总氮");
-                        JSONArray totaldanpaifang = response.getJSONArray("总氮排放量");
-                        JSONArray paishuiliang = response.getJSONArray("排水量");
-                        JSONObject onj;
 
-                        for (int i = 0; i < codarr.length(); i++) {
-                            bean = new IcBean1();
-                            onj = codarr.getJSONObject(i);
+                            IcBean1 bean = null;
+                            JSONArray codarr = response.getJSONArray("COD");
+                            JSONArray codsarr = response.getJSONArray("COD排放量");
+                            JSONArray nh3sarr = response.getJSONArray("NH3N");
+                            JSONArray nh3ssarr = response.getJSONArray("NH3N排放量");
+                            JSONArray totalarr = response.getJSONArray("流量");
+                            JSONArray paishuiliang = response.getJSONArray("排水量");
 
-                            bean.nom = i;
-                            bean.data = onj.getString("id");
-                            bean.cod = "" + onj.getDouble("value");
+                            JSONArray totalin = null;
+                            JSONArray totalinpaifang = null ;
+                            JSONArray totaldan = null ;
+                            JSONArray totaldanpaifang = null ;
+                            if(address != 1){
+                                 totalin = response.getJSONArray("总磷");
+                                 totalinpaifang = response.getJSONArray("总磷排放量");
+                                 totaldan = response.getJSONArray("总氮");
+                                 totaldanpaifang = response.getJSONArray("总氮排放量");
+                            }
 
-                            onj = codsarr.getJSONObject(i);
-                            bean.cods = "" + onj.getDouble("value");
+                            JSONObject onj;
 
-                            onj = nh3sarr.getJSONObject(i);
-                            bean.nh3n = "" + onj.getDouble("value");
+                            for (int i = 0; i < codarr.length(); i++) {
+                                bean = new IcBean1();
+                                onj = codarr.getJSONObject(i);
 
-                            onj = nh3ssarr.getJSONObject(i);
-                            bean.nh3ns = "" + onj.getDouble("value");
+                                bean.nom = i;
+                                bean.data = onj.getString("id");
+                                bean.cod = "" + onj.getDouble("value");
 
-                            onj = totalarr.getJSONObject(i);
-                            bean.total = "" + onj.getDouble("value");
+                                onj = codsarr.getJSONObject(i);
+                                bean.cods = "" + onj.getDouble("value");
 
-                            onj = totalin.getJSONObject(i);
-                            bean.lin = "" + onj.getDouble("value");
+                                onj = nh3sarr.getJSONObject(i);
+                                bean.nh3n = "" + onj.getDouble("value");
 
-                            onj = totalinpaifang.getJSONObject(i);
-                            bean.linpaifan = "" + onj.getDouble("value");
+                                onj = nh3ssarr.getJSONObject(i);
+                                bean.nh3ns = "" + onj.getDouble("value");
 
-                            onj = totaldan.getJSONObject(i);
-                            bean.dan = "" + onj.getDouble("value");
+                                onj = totalarr.getJSONObject(i);
+                                bean.total = "" + onj.getDouble("value");
+                                if(address != 1)
+                                {
+                                onj = totalin.getJSONObject(i);
+                                bean.lin = "" + onj.getDouble("value");
 
-                            onj = totaldanpaifang.getJSONObject(i);
-                            bean.danpaifang = "" + onj.getDouble("value");
+                                onj = totalinpaifang.getJSONObject(i);
+                                bean.linpaifan = "" + onj.getDouble("value");
 
-                            onj = paishuiliang.getJSONObject(i);
-                            bean.paishuiliang = "" + onj.getDouble("value");
+                                onj = totaldan.getJSONObject(i);
+                                bean.dan = "" + onj.getDouble("value");
 
-                            beans.add(bean);
-                        }
-//                        adapter.setDate(beans);
-//                        lineChartManager.setData(beans,type);
-//                        lineChartManager.setWhich(1);
+                                onj = totaldanpaifang.getJSONObject(i);
+                                bean.danpaifang = "" + onj.getDouble("value");
+                                }
+                                onj = paishuiliang.getJSONObject(i);
+                                bean.paishuiliang = "" + onj.getDouble("value");
 
+                                beans.add(bean);
+                            }
                         lineChartManager.setData(beans, 2);
                         lineChartManager.setWhich(2, 0); //选定小时显示x轴   0个数据
                         isDataReady = true;
@@ -365,65 +393,29 @@ public class ICActivity extends AppCompatActivity {
     }
 
     private void initView() {
+        int address = 0;
         StatusBarUtil.darkMode(this);
         lineChartManager = new LineChartManager(barChart1);
         lineChartManager.initChart();
-//        barChartManager1.setYAxis(20, 0, 1);
-        radio2.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+        String base = (String)SPUtils.get(this,"BASE","");
+        if(base.startsWith("http://222.222.220.218")){   //"晋州"
+            tv9.setText("COD排放量");
+            tv10.setText("NH3N排放量");
+            ll_ll2.setVisibility(View.VISIBLE);
+            address = 1;
+        }else if(base.startsWith("http://222.223.112.252")){  //清河
 
-            @Override
-            public void onCheckedChanged(RadioGroup radioGroup, int i) {
-                if (!isDataReady) {
-                    return;
-                }
-                int x = 0;
-                switch (i) {
-                    case R.id.rb_5:
-                        x = 4;
-                        break;
-                    case R.id.rb_6:
-                        x = 5;
-                        break;
-                    case R.id.rb_7:
-                        x = 6;
-                        break;
-                    case R.id.rb_8:
-                        x = 7;
-                        break;
-                }
+        }else if(base.startsWith("http://110.249.145.94")){   //宁晋
 
-//                barChartManager1.showBarChart(xValues, yValues.get(x), arr[x], Color.BLUE);
-                lineChartManager.setWhich(x, 2); //选定小时显示x轴   0个数据
-            }
-        });
-        radio.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+        }
 
-            @Override
-            public void onCheckedChanged(RadioGroup radioGroup, int i) {
-                if (!isDataReady) {
-                    return;
-                }
-                int x = 0;
-                switch (i) {
-                    case R.id.rb_1:
-                        x = 0;
-                        break;
-                    case R.id.rb_2:
-                        x = 1;
-                        break;
-                    case R.id.rb_3:
-                        x = 2;
-                        break;
-                    case R.id.rb_4:
-                        x = 3;
-                        break;
-                }
 
-//                barChartManager1.showBarChart(xValues, yValues.get(x), arr[x], Color.BLUE);
-                lineChartManager.setWhich(x, 2); //选定小时显示x轴   0个数据
-            }
-        });
-        tagGroup.setTags(new String[]{"COD", "COD排放量", "NH3N", "NH3N排放量", "总磷", "总磷排放量", "总氮", "总氮排放量", "流量","排水量"});
+        if(address == 1){
+            tagGroup.setTags(new String[]{"COD", "COD排放量", "NH3N", "NH3N排放量", "流量","排水量"});
+        }else {
+            tagGroup.setTags(new String[]{"COD", "COD排放量", "NH3N", "NH3N排放量", "总磷", "总磷排放量", "总氮", "总氮排放量", "流量","排水量"});
+        }
+
         tagGroup.setOnTagClickListener(new TagGroup.OnTagClickListener() {
             @Override
             public void onTagClick(String tag) {
@@ -460,6 +452,8 @@ public class ICActivity extends AppCompatActivity {
                         break;
             }
         }});
+
+
     }
 
     public void startHistroy(View view) {
@@ -480,21 +474,7 @@ public class ICActivity extends AppCompatActivity {
         if (!ready) {
             return;
         }
-//        builder = new OptionsPickerBuilder(this, new OnOptionsSelectListener() {
-//            @Override
-//            public void onOptionsSelect(int options1, int options2, int options3, View v) {
-//                String id = biglist.get(options1).get(options2).getId(); //获取设备ID
-//                MonitorID = id;
-//                facName.setText(little.get(options1).getFacname());
-//                devName.setText(biglist.get(options1).get(options2).getDevNane());
-//                initNowData(id);
-//                initData(id);
-//            }
-//        }).setSubmitText("确定").setCancelText("取消").setOutSideCancelable(false).build();
-//        builder.setPicker(little, biglist);
-//        builder.setTitleText("选择设备");
-//        builder.setKeyBackCancelable(false);
-//        builder.show();
+
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setIcon(R.mipmap.ic_lonch);
         builder.setTitle("选择企业：");

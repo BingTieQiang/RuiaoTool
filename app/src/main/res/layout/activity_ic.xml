@@ -108,6 +108,7 @@
                     android:layout_width="0dp"
                     android:layout_height="20dp">
                     <TextView
+                        android:id="@+id/tv_9"
                         android:textColor="@color/white"
                         android:textSize="12sp"
                         android:gravity="center"
@@ -170,6 +171,7 @@
                     android:layout_width="0dp"
                     android:layout_height="20dp">
                     <TextView
+                        android:id="@+id/tv_10"
                         android:textColor="@color/white"
                         android:textSize="12sp"
                         android:gravity="center"
@@ -251,7 +253,72 @@
                         android:layout_height="20dp" />
                 </LinearLayout>
             </LinearLayout>
+            <LinearLayout
+                android:visibility="invisible"
+                android:id="@+id/ll_ll2"
+                android:paddingTop="0dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:paddingBottom="5dp"
+                android:background="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:background="@drawable/default_btn_bg1"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginLeft="2dp"
+                    android:orientation="horizontal"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="20dp">
+                    <TextView
+                        android:id="@+id/tv_arr7"
+                        android:textColor="@color/white"
+                        android:textSize="12sp"
+                        android:gravity="center"
+                        android:background="@color/bbg"
+                        android:text="流量"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="20dp" />
+                    <TextView
+                        android:id="@+id/tv_7"
+                        android:textSize="12sp"
+                        android:gravity="center"
+                        android:text=""
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="20dp" />
+                </LinearLayout>
+                <LinearLayout
+                    android:background="@drawable/default_btn_bg1"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginLeft="2dp"
+                    android:orientation="horizontal"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="20dp">
+                    <TextView
+                        android:text="排水量"
+                        android:id="@+id/arr_8"
+                        android:textColor="@color/white"
+                        android:textSize="12sp"
+                        android:gravity="center"
+                        android:background="@color/bbg"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="20dp" />
+                    <TextView
+                        android:id="@+id/tv_8"
+                        android:textSize="12sp"
+                        android:gravity="center"
+                        android:text=""
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="20dp" />
+                </LinearLayout>
 
+            </LinearLayout>
             <LinearLayout
                 android:paddingLeft="10dp"
                 android:layout_marginTop="5dp"
@@ -277,97 +344,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
                 android:layout_centerInParent="true"/>
-            <RadioGroup
-                android:visibility="gone"
-                android:id="@+id/radio"
-                android:layout_marginLeft="10dp"
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <RadioButton
-                    android:id="@+id/rb_1"
-                    android:layout_marginLeft="10dp"
-                    android:button = "@drawable/checkimg"
-                    android:textSize="12sp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="COD"
-                    />
-                <RadioButton
-                    android:id="@+id/rb_2"
-                    android:layout_marginLeft="10dp"
-                    android:button = "@drawable/checkimg"
-                    android:textSize="12sp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="COD排放量"
-                    />
-                <RadioButton
-                    android:id="@+id/rb_3"
-                    android:layout_marginLeft="10dp"
-                    android:button = "@drawable/checkimg"
-                    android:textSize="12sp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="NH₃N"
-                    />
-                <RadioButton
-                    android:id="@+id/rb_4"
-                    android:layout_marginLeft="10dp"
-                    android:button = "@drawable/checkimg"
-                    android:textSize="12sp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="NH₃N排放量"
-                    />
-            </RadioGroup>
-            <RadioGroup
-                android:visibility="gone"
-                android:layout_marginTop="10dp"
-                android:id="@+id/radio2"
-                android:layout_marginLeft="10dp"
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <RadioButton
-                    android:id="@+id/rb_5"
-                    android:layout_marginLeft="10dp"
-                    android:button = "@drawable/checkimg"
-                    android:textSize="12sp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="总磷"
-                    />
-                <RadioButton
-                    android:id="@+id/rb_6"
-                    android:layout_marginLeft="10dp"
-                    android:button = "@drawable/checkimg"
-                    android:textSize="12sp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="总磷排放量"
-                    />
-                <RadioButton
-                    android:id="@+id/rb_7"
-                    android:layout_marginLeft="10dp"
-                    android:button = "@drawable/checkimg"
-                    android:textSize="12sp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="总氮"
-                    />
-                <RadioButton
-                    android:id="@+id/rb_8"
-                    android:layout_marginLeft="10dp"
-                    android:button = "@drawable/checkimg"
-                    android:textSize="12sp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="总氮排放量"
-                    />
-
-            </RadioGroup>
-
             <me.gujun.android.taggroup.TagGroup
                 app:atg_isAppendMode="true"
                 android:id="@+id/tag_group"

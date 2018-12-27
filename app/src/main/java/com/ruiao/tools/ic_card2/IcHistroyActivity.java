@@ -21,6 +21,7 @@ import com.loopj.android.http.RequestParams;
 import com.ruiao.tools.R;
 import com.ruiao.tools.url.URLConstants;
 import com.ruiao.tools.utils.AsynHttpTools;
+import com.ruiao.tools.utils.SPUtils;
 import com.ruiao.tools.utils.StatusBarUtil;
 import com.ruiao.tools.utils.ToastHelper;
 import com.ruiao.tools.widget.Pbdialog;
@@ -46,6 +47,7 @@ import me.gujun.android.taggroup.TagGroup;
  * 向后向前  tian  shi fen xiaoshi
  */
 public class IcHistroyActivity extends AppCompatActivity {
+    int address = 0; //1 是晋州
     @BindView(R.id.tv_1)
     TextView tv1;
     @BindView(R.id.tv_2)
@@ -113,6 +115,14 @@ public class IcHistroyActivity extends AppCompatActivity {
 
     private void initView() {
         StatusBarUtil.darkMode(this);
+        String base = (String) SPUtils.get(this,"BASE","");
+        if(base.startsWith("http://222.222.220.218")){   //"晋州"
+            address = 1;
+        }else if(base.startsWith("http://222.223.112.252")){  //清河
+
+        }else if(base.startsWith("http://110.249.145.94")){   //宁晋
+
+        }
         type = 0;// 默认日数据
         recyclerview = (RecyclerView) findViewById(R.id.recyclerview);
         adapter = new IcAdapter1(this);
@@ -143,8 +153,12 @@ public class IcHistroyActivity extends AppCompatActivity {
                 }
             }
         });
-
-        tagGroup.setTags(new String[]{"COD", "COD排放量", "NH3N", "NH3N排放量", "总磷", "总磷排放量", "总氮", "总氮排放量", "流量","排水量"});
+        if(address ==1)
+        {
+            tagGroup.setTags(new String[]{"COD", "COD排放量", "NH3N", "NH3N排放量", "流量", "排水量"});
+        }else {
+            tagGroup.setTags(new String[]{"COD", "COD排放量", "NH3N", "NH3N排放量", "总磷", "总磷排放量", "总氮", "总氮排放量", "流量", "排水量"});
+        }
 
         tagGroup.setOnTagClickListener(new TagGroup.OnTagClickListener() {
             @Override
@@ -301,13 +315,20 @@ public class IcHistroyActivity extends AppCompatActivity {
                         JSONArray nh3sarr = response.getJSONArray("NH3N");
                         JSONArray nh3ssarr = response.getJSONArray("NH3N排放量");
                         JSONArray totalarr = response.getJSONArray("流量");
+                        JSONArray paishuiliang =  response.getJSONArray("排水量");
+                        JSONArray totalin = null;
+                        JSONArray totalinpaifang = null;
+                        JSONArray totaldan = null;
+                        JSONArray totaldanpaifang = null;
 
-                        JSONArray totalin = response.getJSONArray("总磷");
-                        JSONArray totalinpaifang = response.getJSONArray("总磷排放量");
-                        JSONArray totaldan = response.getJSONArray("总氮");
-                        JSONArray totaldanpaifang = response.getJSONArray("总氮排放量");
-                        JSONArray paishuiliang = response.getJSONArray("排水量");
-
+                        if(address == 1)
+                        {
+                        }else{
+                             totalin = response.getJSONArray("总磷");
+                             totalinpaifang = response.getJSONArray("总磷排放量");
+                             totaldan = response.getJSONArray("总氮");
+                             totaldanpaifang = response.getJSONArray("总氮排放量");
+                        }
                         JSONObject onj;
 
                         for (int i = 0; i < codarr.length(); i++) {
@@ -330,18 +351,22 @@ public class IcHistroyActivity extends AppCompatActivity {
 
                             onj = totalarr.getJSONObject(i);
                             bean.total = "" + onj.getDouble("value");
+                            if(address == 1)
+                            {
+                            }else{
+                                onj = totalin.getJSONObject(i);
+                                bean.lin = "" + onj.getDouble("value");
 
-                            onj = totalin.getJSONObject(i);
-                            bean.lin = "" + onj.getDouble("value");
+                                onj = totalinpaifang.getJSONObject(i);
+                                bean.linpaifan = "" + onj.getDouble("value");
 
-                            onj = totalinpaifang.getJSONObject(i);
-                            bean.linpaifan = "" + onj.getDouble("value");
+                                onj = totaldan.getJSONObject(i);
+                                bean.dan = "" + onj.getDouble("value");
 
-                            onj = totaldan.getJSONObject(i);
-                            bean.dan = "" + onj.getDouble("value");
+                                onj = totaldanpaifang.getJSONObject(i);
+                                bean.danpaifang = "" + onj.getDouble("value");
+                            }
 
-                            onj = totaldanpaifang.getJSONObject(i);
-                            bean.danpaifang = "" + onj.getDouble("value");
 
                             onj = paishuiliang.getJSONObject(i);
                             bean.paishuiliang = "" + onj.getDouble("value");
@@ -349,6 +374,7 @@ public class IcHistroyActivity extends AppCompatActivity {
                             beans.add(bean);
                         }
                         adapter.setDate(beans);
+                        lineChartManager.setAddress(address);
                         lineChartManager.setData(beans, type);
                         lineChartManager.setWhich(1, type);
                     } else {
