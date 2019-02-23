@@ -1,4 +1,4 @@
-package com.ruiao.tools.wuran;
+package com.ruiao.tools.autowater;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -6,14 +6,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
-import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
-import com.bigkoo.pickerview.view.OptionsPickerView;
+import com.github.mikephil.charting.charts.LineChart;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.ruiao.tools.R;
@@ -24,6 +21,9 @@ import com.ruiao.tools.utils.AsynHttpTools;
 import com.ruiao.tools.utils.SPUtils;
 import com.ruiao.tools.utils.StatusBarUtil;
 import com.ruiao.tools.utils.ToastHelper;
+
+
+import com.ruiao.tools.voc.VocHistroyActivity;
 import com.ruiao.tools.widget.Pbdialog;
 
 import org.apache.http.Header;
@@ -31,6 +31,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -38,96 +39,62 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-//污染源
-public class WuRangActivity extends AppCompatActivity {
-    private ArrayAdapter<String> adapter;
-    private ArrayAdapter<String> dev_adapter;
-    ArrayList<String> fac_list = new ArrayList<>();
-    ArrayList<ArrayList<String>> dev_list = new ArrayList<>();
-    //    @BindView(R.id.arr1context)
-//    TextView arr1context;
-    private int devtype;
-    private boolean ready = false;
-    private boolean isDataReady = false;
-    ArrayList<ArrayList<DevBean>> biglist = new ArrayList<>();
-    ArrayList<FactroyBean> little = new ArrayList<>();
-    private Pbdialog dialog; //进度条
-    @BindView(R.id.tv_city)
-    TextView tvCity;
-    @BindView(R.id.tv_change_city)
-    TextView tvChangeCity;
-    @BindView(R.id.tv_newDate)
-    TextView tvNewDate;
+public class WatorActivity extends AppCompatActivity {
+
     @BindView(R.id.fac_name)
     TextView facName;
     @BindView(R.id.dev_name)
     TextView devName;
-    @BindView(R.id.arr1)
-    TextView arr1;
-    @BindView(R.id.arrcontext1)
-    TextView arrcontext1;
-    @BindView(R.id.arr2)
-    TextView arr2;
-    @BindView(R.id.arr2context)
-    TextView arr2context;
-    @BindView(R.id.arr3)
-    TextView arr3;
-    @BindView(R.id.arr3context)
-    TextView arr3context;
-    @BindView(R.id.arr4)
-    TextView arr4;
-    @BindView(R.id.arr4context)
-    TextView arr4context;
-    @BindView(R.id.arr5)
-    TextView arr5;
-    @BindView(R.id.arr5context)
-    TextView arr5context;
-    @BindView(R.id.arr6)
-    TextView arr6;
-    @BindView(R.id.arr6context)
-    TextView arr6context;
-    @BindView(R.id.arr7)
-    TextView arr7;
-    @BindView(R.id.arr7context)
-    TextView arr7context;
-
-    private Context context;
-    OptionsPickerView builder = null;
+    @BindView(R.id.tv_newDate)
+    TextView tvNewDate;
+    @BindView(R.id.voc1)
+    TextView voc1;
+    @BindView(R.id.voc2)
+    TextView voc2;
+    @BindView(R.id.lineChart)
+    LineChart lineChart;
     private String MonitorID = null;
+    Date nowTime = new Date();
+    ArrayList<String> fac_list = new ArrayList<>();
+    ArrayList<ArrayList<String>> dev_list = new ArrayList<>();
+    private ArrayAdapter<String> adapter;
+    private ArrayAdapter<String> dev_adapter;
+    Date hourTime = new Date(nowTime.getTime() - 2 * 60 * 60 * 1000);  //小时数据
+    private boolean isDataReady = false;
+    private SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    private boolean ready = false;
+    ArrayList<ArrayList<DevBean>> biglist = new ArrayList<>();
+    ArrayList<FactroyBean> little = new ArrayList<>();
+    Context context;
+
+    private Pbdialog dialog; //进度条
+    private LineChartManager lineChartManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context = this;
-        setContentView(R.layout.activity_wu_rang);
+        setContentView(R.layout.activity_wator);
         ButterKnife.bind(this);
-        initView();
-        initData();
+        StatusBarUtil.darkMode(this);
+        lineChartManager = new LineChartManager(lineChart);
+        lineChartManager.initChart();
+        initFacDev();
     }
 
-    /**
-     * 污染源           1
-     * 工地扬尘        2
-     * 重点园区监测 3
-     * 水质自动站    4
-     * VOC监测      5
-     * 厂界监测       6
-     * 空气自动站    8
-     * IC卡总量控制 12
-     * 空气微型站    14
-     * 油烟在线监测 15
-     */
-    private void initData() {
+    public Pbdialog showdialog(Context context, String msg) {
+        Pbdialog pbdialog = new Pbdialog(context);
+        pbdialog.setMessage(msg);
+        pbdialog.show();
+        return pbdialog;
+    }
+
+    private void initFacDev() {
         dialog = showdialog(this, "正在加载.......");
-
-        adapter = new ArrayAdapter<String>(context,android.R.layout.simple_list_item_1,fac_list);
-
-        //1，请求厂家，设备，列表
-        //2，请求最新数据
-        //1开头是气，2开头是水
         RequestParams pa = new RequestParams();
-        pa.add("username", (String) SPUtils.get(context, "username", ""));
-        pa.add("SID", "1");
+        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, fac_list);
+        pa.add("username", (String) SPUtils.get(this, "username", ""));
+        pa.add("SID", "4");
         AsynHttpTools.httpGetMethodByParams(URLConstants.FAC, pa, new JsonHttpResponseHandler("GB2312") {
             @Override
             public void onFinish() {
@@ -135,19 +102,19 @@ public class WuRangActivity extends AppCompatActivity {
                 if (dialog != null && dialog.isShowing()) {
                     dialog.dismiss();
                 }
+
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 throwable.printStackTrace();
-
-
             }
 
             @Override
             public void onFailure(int code, Header[] heads, Throwable throwable, JSONObject json) {
-                throwable.printStackTrace();
 
+                throwable.printStackTrace();
+                finish();
             }
 
             @Override
@@ -164,7 +131,7 @@ public class WuRangActivity extends AppCompatActivity {
                             fac = arr.getJSONObject(i);
                             String facname = fac.getString("name"); //工厂名字
 
-                            fac_list.add(facname);
+                            fac_list.add("" + i + " " + facname);
 
                             little.add(new FactroyBean(facname));
                             devs = fac.getJSONArray("device");
@@ -180,8 +147,8 @@ public class WuRangActivity extends AppCompatActivity {
 
                                 temp.add(devNane);
                             }
-                            biglist.add(mlist);
                             dev_list.add(temp);
+                            biglist.add(mlist);
                         }
                         ready = true;
                         initPickerView();
@@ -194,24 +161,15 @@ public class WuRangActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
-
             }
-
         });
     }
 
-    private void initView() {
-        StatusBarUtil.darkMode(this);
-
-    }
-
-    /**
-     * 初始化工厂，设备  选择器
-     */
     private void initPickerView() {
         if (!ready) {
             return;
         }
+
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setIcon(R.mipmap.ic_lonch);
         builder.setTitle("选择企业：");
@@ -227,8 +185,9 @@ public class WuRangActivity extends AppCompatActivity {
         });
         builder.show();
     }
-    public void showDev(final int bwhich){
-        dev_adapter = new ArrayAdapter<String>(context,android.R.layout.simple_list_item_1,dev_list.get(bwhich));
+
+    public void showDev(final int bwhich) {
+        dev_adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, dev_list.get(bwhich));
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setIcon(R.mipmap.ic_lonch);
         builder.setTitle("选择设备：");
@@ -240,23 +199,22 @@ public class WuRangActivity extends AppCompatActivity {
                 MonitorID = id;
                 facName.setText(little.get(bwhich).getFacname());
                 devName.setText(biglist.get(bwhich).get(which).getDevNane());
-                WuRangActivity.this.MonitorID = MonitorID;
+//                MonitorID = MonitorID;
                 isDataReady = true;
-                initNowData();
+                initNowData(id);
+                initData(id);
             }
         });
         builder.show();
     }
-    public Pbdialog showdialog(Context context, String msg) {
-        Pbdialog pbdialog = new Pbdialog(context);
-        pbdialog.setMessage(msg);
-        pbdialog.show();
-        return pbdialog;
-    }
 
-    private void initNowData() {
+    private void initNowData(String MonitorID) {
         RequestParams pa = new RequestParams();
+//        pa.add("start", format.format(new Date(hourTime.getTime() - 2 * 60 * 1000)));
+//        pa.add("end", format.format(hourTime));
+//        pa.add("type", "fen");
         pa.add("MonitorID", MonitorID);
+//        pa.add("username", (String)SPUtils.get(ICActivity.this,"username",""));
         AsynHttpTools.httpGetMethodByParams(URLConstants.NEW_IC, pa, new JsonHttpResponseHandler("GB2312") {
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
@@ -276,53 +234,13 @@ public class WuRangActivity extends AppCompatActivity {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-
                 try {
                     if (response.getBoolean("success")) {
-                        tvNewDate.setText("最新数据 刷新时间:" + response.getString("MonitorTime")+"(点击切换企业)");
-
-                        if (MonitorID.startsWith("1")) {       //1开头是气 7参数，2开头是水 5参数
-                            arr1.setText("烟气流量(mg/m3)");
-                            arrcontext1.setText("" + response.getDouble("烟气流量"));
-                            arr2.setText("烟尘浓度(mg/m3)");
-                            arr2context.setText("" + response.getDouble("烟尘浓度"));
-                            arr3.setText("烟尘折算(mg/m3)");
-                            arr3context.setText("" + response.getDouble("烟尘折算"));
-                            arr4.setText("二氧化硫(mg/m3)");
-                            arr4context.setText("" + response.getDouble("二氧化硫"));
-                            arr5.setText("二氧化硫折算(mg/m3)");
-                            arr5context.setText("" + response.getDouble("二氧化硫折算"));
-                            arr6.setText("氮氧化物(mg/m3)");
-                            arr6context.setText("" + response.getDouble("氮氧化物"));
-                            arr7.setText("氮氧化物折算(mg/m3)");
-                            arr7context.setText("" + response.getDouble("氮氧化物折算"));
-                            devtype = 1;
-                        } else {
-                            if(response.has("流量")){
-                                arr1.setText("流量(L/s)");
-                                arrcontext1.setText("" + response.getDouble("流量"));
-                            }
-                            if(response.has("NH3N")){
-                                arr2.setText("NH3N(mg/L)");
-                                arr2context.setText("" + response.getDouble("NH3N"));
-                            }
-                            if(response.has("总氮")){
-                                arr3.setText("总氮(mg/L)");
-                                arr3context.setText("" + response.getDouble("总氮"));
-                            }
-                            if(response.has("总磷")){
-                                arr4.setText("总磷(mg/L)");
-                                arr4context.setText("" + response.getDouble("总磷"));
-                            }
-                            if(response.has("COD")){
-                                arr5.setText("COD(mg/L)");
-                                arr5context.setText("" + response.getDouble("COD"));
-                            }
-                            arr6.setText("参数");
-//                            arr6context.setText("" + response.getDouble("氮氧化物"));
-                            arr7.setText("参数");
-//                            arr7context.setText("" + response.getDouble("氮氧化物折算"));
-                            devtype = 2;
+                        tvNewDate.setText("最新数据：刷新时间:" + response.getString("MonitorTime") + "(点击切换企业)");
+                        String base = (String) SPUtils.get(context, "BASE", "");
+                        if (base.startsWith("http://222.222.220.218")) {   //"晋州"
+                            voc1.setText("" + response.getDouble("COD"));
+                            voc2.setText("" + response.getString("NH3N"));
                         }
 
 
@@ -338,6 +256,80 @@ public class WuRangActivity extends AppCompatActivity {
 
     }
 
+    private void initData(String MonitorID) {
+        dialog = showdialog(this, "正在加载.......");
+        RequestParams pa = new RequestParams();
+        pa.add("start", format.format(new Date(hourTime.getTime() - 12 * 60 * 60 * 1000)));
+        pa.add("end", format.format(hourTime));
+        pa.add("type", "xiaoshi");
+        pa.add("MonitorID", MonitorID);
+        pa.add("username", (String) SPUtils.get(context, "username", ""));
+        AsynHttpTools.httpGetMethodByParams(URLConstants.IC, pa, new JsonHttpResponseHandler("GB2312") {
+            @Override
+            public void onFinish() {
+                super.onFinish();
+                if (dialog != null && dialog.isShowing()) {
+                    dialog.dismiss();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                throwable.printStackTrace();
+            }
+
+            @Override
+            public void onFailure(int code, Header[] heads, Throwable throwable, JSONObject json) {
+
+                throwable.printStackTrace();
+            }
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                int address = 0; //1为晋州
+                // list 按照时间排列
+                ArrayList<WatorBean> beans = new ArrayList<>();
+
+                try {
+                    String base = (String) SPUtils.get(context, "BASE", "");
+                    if (base.startsWith("http://222.222.220.218")) {   //"晋州"
+                        address = 1;
+                    }
+
+                    lineChartManager.setAddress(address);
+                    Boolean status = response.getBoolean("success");
+                    if (status) {
+                        beans.clear();
+                        WatorBean bean = new WatorBean();
+
+                        JSONArray voclist1 = response.getJSONArray("COD平均值");
+                        JSONArray voclist2 = response.getJSONArray("氨氮平均值");
+
+                        JSONObject vocbean1 = null;
+                        JSONObject vocbean2 = null;
+                        for(int i = 0; i < voclist1.length(); i++){
+                            vocbean1 = voclist1.getJSONObject(i);
+                            vocbean2 = voclist2.getJSONObject(i);
+                            bean.date = vocbean1.getString("id");
+                            bean.cod = vocbean1.getString("value");
+                            bean.dan = vocbean2.getString("value");
+                            beans.add(bean);
+                        }
+                        lineChartManager.setData(beans);
+                    } else {
+                        ToastHelper.shortToast(context, response.getString("message"));
+                    }
+                } catch (JSONException e) {
+                    ToastHelper.shortToast(context, "数据解析错误");
+                    //JSON数据格式错误
+                    e.printStackTrace();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
     @OnClick({R.id.ll_select_dev, R.id.histroy})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -345,16 +337,10 @@ public class WuRangActivity extends AppCompatActivity {
                 initPickerView();
                 break;
             case R.id.histroy:
-                if(isDataReady) {
-                    Intent intent = new Intent(context,WuRanHistroyActivity.class);
-                    intent.putExtra("MonitorID",MonitorID);
-                    intent.putExtra("devtype",""+devtype);
-                    startActivity(intent);
-                }else{
-                    ToastHelper.shortToast(context,"请选择企业和设备");
-                }
+                Intent intent = new Intent(context,WatorHistroyActivity.class);
+                intent.putExtra("MonitorID",MonitorID);
+                startActivity(intent);
                 break;
         }
     }
-
 }

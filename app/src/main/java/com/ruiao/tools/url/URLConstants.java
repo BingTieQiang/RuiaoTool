@@ -34,17 +34,13 @@ public class URLConstants {
 //    public static String SCANUPLOAD = BASE+"api/template/upload";//扫码上传
 //    public static String DOWNAPP = BASE+"api/template/upload";//下载APP接口
 //    public static String TASK = BASE+"api/memberScore/index";//任务列表
-//    public static String PERSONLIST = BASE+"api/memberScore/scoreInput";//被评分人员列表
+
 //
 
     public static String IC = MBASE+"DataHistory.asp";// IC 卡总量计
     public static String FAC = MBASE+"facdev.asp";// 工厂 设备列表
+    public static String VOC = MBASE+"DataHistory.asp";// VOC
     public static String NEW_IC = MBASE+"DataNew.asp";// 最新数据IC卡设备
     public static String CID = MBASE+"cid.asp";// 提交CID
 
 }
-/*
-http://172.16.1.10:8088/app/api/cloud/upload
-http://172.16.1.10:8088/app/api/cloud/download
-http://172.16.1.7:8080/egovApp/app/api/memberScore/index
- */

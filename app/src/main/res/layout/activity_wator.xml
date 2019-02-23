@@ -4,72 +4,68 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/grey_100"
-    tools:context="com.ruiao.tools.ic_card2.ICActivity">
+    tools:context="com.ruiao.tools.voc.VocActivity">
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/padding_top"
+                android:background="@color/chart_bg_1" />
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:background="@color/chart_bg">
+
                 <TextView
                     android:id="@+id/tv_city"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:text="IC卡总量详细"
+                    android:text="水自动站"
                     android:textColor="@color/white"
                     android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/tv_change_city"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="11dp"
+                    android:text=""
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
             </RelativeLayout>
             <LinearLayout
-                android:id="@+id/select"
-                android:layout_marginTop="5dp"
-                android:padding="10dp"
-                android:background="@color/white"
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:id="@+id/fac_name"
-                    android:text="选择设备"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-                <TextView
-                    android:id="@+id/dev_name"
-                    android:layout_marginLeft="20dp"
-                    android:text=""
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
-            <LinearLayout
+                android:id="@+id/ll_select_dev"
                 android:layout_marginTop="5dp"
                 android:padding="10dp"
                 android:background="@color/white"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <ImageView
-                    android:src="@mipmap/imgic1"
+                    android:src="@mipmap/paifengshan"
                     android:layout_width="18dp"
                     android:layout_height="18dp" />
                 <TextView
                     android:id="@+id/tv_newDate"
                     android:layout_marginLeft="10dp"
                     android:textColor="@color/bbg"
-                    android:text="最新数据"
+                    android:text="点击选择 企业设备"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </LinearLayout>
-
             <LinearLayout
-                android:layout_marginTop="10dp"
+                android:paddingTop="0dp"
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp"
-                android:paddingBottom="5dp"
+                android:paddingBottom="2dp"
                 android:background="@color/white"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -86,39 +82,12 @@
                         android:textSize="12sp"
                         android:gravity="center"
                         android:background="@color/bbg"
-                        android:text="COD(mg/L)"
+                        android:text="企业"
                         android:layout_weight="1"
                         android:layout_width="0dp"
                         android:layout_height="20dp" />
                     <TextView
-                        android:id="@+id/cod"
-                        android:textSize="12sp"
-                        android:gravity="center"
-                        android:text=""
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="20dp" />
-                </LinearLayout>
-                <LinearLayout
-                    android:background="@drawable/default_btn_bg1"
-                    android:layout_marginTop="2dp"
-                    android:layout_marginLeft="2dp"
-                    android:orientation="horizontal"
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="20dp">
-                    <TextView
-                        android:id="@+id/tv_9"
-                        android:textColor="@color/white"
-                        android:textSize="12sp"
-                        android:gravity="center"
-                        android:background="@color/bbg"
-                        android:text="总磷(mg/L)"
-                        android:layout_weight="1"
-                        android:layout_width="0dp"
-                        android:layout_height="20dp" />
-                    <TextView
-                        android:id="@+id/tv_p"
+                        android:id="@+id/fac_name"
                         android:textSize="12sp"
                         android:gravity="center"
                         android:text=""
@@ -132,7 +101,7 @@
                 android:paddingTop="0dp"
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp"
-                android:paddingBottom="5dp"
+                android:paddingBottom="2dp"
                 android:background="@color/white"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -149,39 +118,12 @@
                         android:textSize="12sp"
                         android:gravity="center"
                         android:background="@color/bbg"
-                        android:text="NH3N(mg/L)"
+                        android:text="设备名称"
                         android:layout_weight="1"
                         android:layout_width="0dp"
                         android:layout_height="20dp" />
                     <TextView
-                        android:id="@+id/nh3n"
-                        android:textSize="12sp"
-                        android:gravity="center"
-                        android:text=""
-                        android:layout_weight="1"
-                        android:layout_width="0dp"
-                        android:layout_height="20dp" />
-                </LinearLayout>
-                <LinearLayout
-                    android:background="@drawable/default_btn_bg1"
-                    android:layout_marginTop="2dp"
-                    android:layout_marginLeft="2dp"
-                    android:orientation="horizontal"
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="20dp">
-                    <TextView
-                        android:id="@+id/tv_10"
-                        android:textColor="@color/white"
-                        android:textSize="12sp"
-                        android:gravity="center"
-                        android:background="@color/bbg"
-                        android:text="总氮(mg/L)"
-                        android:layout_weight="1"
-                        android:layout_width="0dp"
-                        android:layout_height="20dp" />
-                    <TextView
-                        android:id="@+id/tv_n"
+                        android:id="@+id/dev_name"
                         android:textSize="12sp"
                         android:gravity="center"
                         android:text=""
@@ -190,16 +132,6 @@
                         android:layout_height="20dp" />
                 </LinearLayout>
 
-            </LinearLayout>
-
-            <LinearLayout
-                android:paddingTop="0dp"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
-                android:paddingBottom="5dp"
-                android:background="@color/white"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
                 <LinearLayout
                     android:background="@drawable/default_btn_bg1"
                     android:layout_marginTop="2dp"
@@ -209,42 +141,17 @@
                     android:layout_width="0dp"
                     android:layout_height="20dp">
                     <TextView
+                        android:id="@+id/arr1"
                         android:textColor="@color/white"
                         android:textSize="12sp"
                         android:gravity="center"
                         android:background="@color/bbg"
-                        android:text="阀门控制方式"
+                        android:text="COD"
                         android:layout_weight="1"
                         android:layout_width="0dp"
                         android:layout_height="20dp" />
                     <TextView
-                        android:id="@+id/famen_type"
-                        android:textSize="12sp"
-                        android:gravity="center"
-                        android:text=""
-                        android:layout_weight="1"
-                        android:layout_width="0dp"
-                        android:layout_height="20dp" />
-                </LinearLayout>
-                <LinearLayout
-                    android:background="@drawable/default_btn_bg1"
-                    android:layout_marginTop="2dp"
-                    android:layout_marginLeft="2dp"
-                    android:orientation="horizontal"
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="20dp">
-                    <TextView
-                        android:textColor="@color/white"
-                        android:textSize="12sp"
-                        android:gravity="center"
-                        android:background="@color/bbg"
-                        android:text="阀门状态"
-                        android:layout_weight="1"
-                        android:layout_width="0dp"
-                        android:layout_height="20dp" />
-                    <TextView
-                        android:id="@+id/famen_stata"
+                        android:id="@+id/voc1"
                         android:textSize="12sp"
                         android:gravity="center"
                         android:text=""
@@ -254,12 +161,10 @@
                 </LinearLayout>
             </LinearLayout>
             <LinearLayout
-                android:visibility="invisible"
-                android:id="@+id/ll_ll2"
                 android:paddingTop="0dp"
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp"
-                android:paddingBottom="5dp"
+                android:paddingBottom="2dp"
                 android:background="@color/white"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -272,17 +177,17 @@
                     android:layout_width="0dp"
                     android:layout_height="20dp">
                     <TextView
-                        android:id="@+id/tv_arr7"
+                        android:id="@+id/arr2"
                         android:textColor="@color/white"
                         android:textSize="12sp"
                         android:gravity="center"
                         android:background="@color/bbg"
-                        android:text="流量"
+                        android:text="氨氮"
                         android:layout_weight="1"
                         android:layout_width="0dp"
                         android:layout_height="20dp" />
                     <TextView
-                        android:id="@+id/tv_7"
+                        android:id="@+id/voc2"
                         android:textSize="12sp"
                         android:gravity="center"
                         android:text=""
@@ -291,6 +196,7 @@
                         android:layout_height="20dp" />
                 </LinearLayout>
                 <LinearLayout
+                    android:visibility="invisible"
                     android:background="@drawable/default_btn_bg1"
                     android:layout_marginTop="2dp"
                     android:layout_marginLeft="2dp"
@@ -299,17 +205,17 @@
                     android:layout_width="0dp"
                     android:layout_height="20dp">
                     <TextView
-                        android:text="排水量"
-                        android:id="@+id/arr_8"
+                        android:id="@+id/arr3"
                         android:textColor="@color/white"
                         android:textSize="12sp"
                         android:gravity="center"
                         android:background="@color/bbg"
+                        android:text="参数四"
                         android:layout_weight="1"
                         android:layout_width="0dp"
                         android:layout_height="20dp" />
                     <TextView
-                        android:id="@+id/tv_8"
+                        android:id="@+id/arr3context"
                         android:textSize="12sp"
                         android:gravity="center"
                         android:text=""
@@ -342,23 +248,19 @@
                 android:layout_marginTop="5dp"
                 android:id="@+id/lineChart"
                 android:layout_width="match_parent"
-                android:layout_height="300dp"
+                android:layout_height="200dp"
                 android:layout_centerInParent="true"/>
-            <me.gujun.android.taggroup.TagGroup
-                app:atg_isAppendMode="true"
-                android:id="@+id/tag_group"
-                style="@style/TagGroup" />
             <TextView
+                android:layout_marginTop="10dp"
                 android:textSize="12sp"
                 android:background="@color/white"
                 android:layout_marginRight="10dp"
                 android:layout_marginLeft="10dp"
                 android:textColor="@color/black"
-                android:text="注：单位 流量(L/s),COD NH3N 总磷 总氮(mg/L),排水量(m3),COD排放量 NH3N排放量 总磷排放量 总氮排放量(kg)"
+                android:text="注：COD（mg/L） 氨氮（mg/L）"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
             <LinearLayout
-
                 android:paddingLeft="10dp"
                 android:layout_marginTop="5dp"
                 android:paddingBottom="5dp"
@@ -373,7 +275,7 @@
                 <TextView
                     android:layout_marginLeft="10dp"
                     android:textColor="@color/bbg"
-                    android:text="相关数据"
+                    android:text="查询历史"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </LinearLayout>
@@ -385,7 +287,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <LinearLayout
-                    android:onClick="startHistroy"
+                    android:id="@+id/histroy"
                     android:orientation="vertical"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">

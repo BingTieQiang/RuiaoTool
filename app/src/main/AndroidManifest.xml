@@ -77,10 +77,10 @@
         <activity
             android:name=".ic_card.IcCardActivity"
             android:theme="@style/Theme.AppCompat" />
-        <activity android:name=".advertisement.AdActivity"
+        <activity
+            android:name=".advertisement.AdActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppMainTheme"
-            />
+            android:theme="@style/AppMainTheme" />
         <activity android:name=".notice.NoticeActivity" />
 
         <service
@@ -141,10 +141,13 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppMainTheme" />
         <activity android:name=".youyan.YouyanActivity" />
-        <activity android:name=".alarm.AlarmActivity"
+        <activity
+            android:name=".alarm.AlarmActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppMainTheme"
-            />
+            android:theme="@style/AppMainTheme" />
+        <activity android:name=".autowater.WatorActivity" />
+        <activity android:name=".voc.VocHistroyActivity"/>
+        <activity android:name=".autowater.WatorHistroyActivity"/>
     </application>
 
 </manifest>

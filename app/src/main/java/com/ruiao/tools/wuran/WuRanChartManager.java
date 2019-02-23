@@ -1,5 +1,7 @@
 package com.ruiao.tools.wuran;
 
+import android.content.Context;
+
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Description;
@@ -12,6 +14,7 @@ import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.formatter.IValueFormatter;
 import com.github.mikephil.charting.utils.ViewPortHandler;
 import com.ruiao.tools.ic_card2.IcBean1;
+import com.ruiao.tools.utils.SPUtils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -23,7 +26,7 @@ import java.util.List;
  */
 
 public class WuRanChartManager {
-//    "2018/5/20 8:28:00";
+    private Context context;
     private SimpleDateFormat formatSor = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
     private SimpleDateFormat formatSorMin = new SimpleDateFormat("MM-dd HH:mm");
     private SimpleDateFormat formatResDay = new SimpleDateFormat("MM-dd");
@@ -36,7 +39,8 @@ public class WuRanChartManager {
     YAxis rightYAxis = null;
     YAxis leftYAxis;
     LineData data;
-    public WuRanChartManager(LineChart mLineChart) {
+    public WuRanChartManager(LineChart mLineChart,Context context) {
+        this.context = context;
         this.mLineChart = mLineChart;
         bigList.add(new ArrayList<Entry>());
         bigList.add(new ArrayList<Entry>());
@@ -149,7 +153,7 @@ public class WuRanChartManager {
     public String zonlinPingJun;  //总磷
     public String zondanPingJun;   //总氮
  */
-
+        String base = (String) SPUtils.get(context,"BASE","");
         for (int i = 0;i < beans.size();i++)
         {
 //            new Entry(i,Float.parseFloat(beans.get(i).cod));
@@ -174,6 +178,9 @@ public class WuRanChartManager {
                 bigList.get(0).add(new Entry(i,Float.parseFloat(beans.get(i).SMliuliang)));
                 bigList.get(1).add(new Entry(i,Float.parseFloat(beans.get(i).SMcod)));
                 bigList.get(2).add(new Entry(i,Float.parseFloat(beans.get(i).SMnh3n)));
+                if(base.startsWith("http://222.222.220.218")){ //晋州
+                   continue;
+                }
                 bigList.get(3).add(new Entry(i,Float.parseFloat(beans.get(i).SMzonlin)));
                 bigList.get(4).add(new Entry(i,Float.parseFloat(beans.get(i).SMzondan)));
 
@@ -181,6 +188,9 @@ public class WuRanChartManager {
                 bigList.get(0).add(new Entry(i,Float.parseFloat(beans.get(i).liuLiangPinJun)));
                 bigList.get(1).add(new Entry(i,Float.parseFloat(beans.get(i).CODPinJun)));
                 bigList.get(2).add(new Entry(i,Float.parseFloat(beans.get(i).andanPingjun)));
+                if(base.startsWith("http://222.222.220.218")){ //晋州
+                    continue;
+                }
                 bigList.get(3).add(new Entry(i,Float.parseFloat(beans.get(i).zonlinPingJun)));
                 bigList.get(4).add(new Entry(i,Float.parseFloat(beans.get(i).zondanPingJun)));
             }

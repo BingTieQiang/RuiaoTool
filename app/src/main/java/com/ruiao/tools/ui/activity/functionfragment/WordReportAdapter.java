@@ -14,7 +14,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * Created by ruiao on 2018/4/18.
+ * Created by ruiao on 2018/4/18.  workreport_item
  */
 
 public class WordReportAdapter extends BaseAdapter {
@@ -23,11 +23,11 @@ public class WordReportAdapter extends BaseAdapter {
     }
 
     private Context context;
-    private String[] item_Text = {"VOC", "空气站","污染源","工地扬尘","水质自动站","厂区检测","油烟在线","设备监控","IC卡总量站"};
+    private String[] item_Text = {"VOC", "空气站","污染源","工地扬尘","水质自动站","厂区检测","油烟在线","设备监控","IC卡总量站","工况监控"};
     private int[] item_img = {R.mipmap.vocs, R.mipmap.kongqizhan,R.mipmap.wuranyuan,
                                 R.mipmap.yangchen, R.mipmap.shuizhi,R.mipmap.changqu,
                                     R.mipmap.jiankong,R.mipmap.famen,
-            R.mipmap.shuaka
+                                     R.mipmap.shuaka,R.mipmap.gongkuang
 
     };
     @Override

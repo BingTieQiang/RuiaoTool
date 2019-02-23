@@ -10,6 +10,7 @@ import com.jude.rollviewpager.OnItemClickListener;
 import com.jude.rollviewpager.RollPagerView;
 import com.ruiao.tools.R;
 import com.ruiao.tools.advertisement.AdActivity;
+import com.ruiao.tools.autowater.WatorActivity;
 import com.ruiao.tools.ic_card.IcCardActivity;
 import com.ruiao.tools.ic_card.IcDeviceStateActivity;
 import com.ruiao.tools.ic_card.IcDeviceStateActivity1;
@@ -52,52 +53,40 @@ public class EnergyFragment extends BaseFragment {
         optionFucntionGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String base = (String)SPUtils.get(getContext(),"BASE","");
                 Intent intent = new Intent();
                 ArrayList<Class> list = new ArrayList<>();
                 if(position==0){//VOC
-                    ToastHelper.shortToast(mContext,"未安装此设备");
+                    if(base.startsWith("http://222.222.220.218")){ //晋州
+                        startActivity(new Intent(mContext,VocActivity.class));
+                    }
 
-//                }else if(position==1){//空气站
-//                    intent.setClass(WorkReportFrag.this.activity, MonthlyReport.class);
-//                    list.clear();
-//                    list.add(IcCardActivity.class);
-//                    list.add(IcDeviceStateActivity.class);
-//                    list.add(ICActivity.class);
-//                    Mypop popup = new Mypop(mContext,list);
-//                    popup.showPopupWindow();
+
 
                 }else if(position==2){
-                    String base = (String)SPUtils.get(getContext(),"BASE","");
-                    if(base.startsWith("http://222.222.220.218")){
-                        ToastHelper.shortToast(mContext,"晋州暂未安装此设备");
-                        return;
-                    }
-//                    if(base.startsWith("http://110.249.145.94:11888/")){
-//                        ToastHelper.shortToast(mContext,"宁晋暂未安装此设备");
-//                        return;
-//                    }
+
+
                     startActivity(new Intent(mContext, WuRangActivity.class));
                 }
 
 
                 else if(position==8){
-                    String base = (String)SPUtils.get(getContext(),"BASE","");
+
                     if(base.startsWith("http://110.249.145.94:11888/")){
                         ToastHelper.shortToast(mContext,"宁晋暂未安装此设备");
                         return;
                     }
-//                    list.add(IcCardActivity.class);
-//                    Mypop popup = new Mypop(mContext,list);
-//                    popup.showPopupWindow();
-//                    list.clear();
-//                    list.add(ICActivity.class);    //样式1先河环保
-//                    list.add(IcDeviceStateActivity1.class); //样式2 罗克佳华
-//                    Mypop popup = new Mypop(mContext,list);
-//                    popup.showPopupWindow();
-
                     startActivity(new Intent(mContext,ICActivity.class));
 
-                }else {
+                }else if(position==4){
+                    if(base.startsWith("http://222.222.220.218")){ //晋州
+                        startActivity(new Intent(mContext,WatorActivity.class));
+                    }else {
+                        ToastHelper.shortToast(mContext,"暂未安装此设备");
+                    }
+                }
+
+                else {
                     ToastHelper.shortToast(mContext,"未安装此设备");
                 }
 

@@ -38,9 +38,6 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.ruiao.tools.Application;
 import com.ruiao.tools.R;
-import com.ruiao.tools.ic_card2.DevBean;
-import com.ruiao.tools.ic_card2.FactroyBean;
-import com.ruiao.tools.ic_card2.ICActivity;
 import com.ruiao.tools.tts.AutoCheck;
 import com.ruiao.tools.tts.InitConfig;
 import com.ruiao.tools.tts.MySyntherizer;
@@ -160,7 +157,7 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
 //
     }
     public void speek(){
-        synthesizer.speak("新的消息");
+//        synthesizer.speak("新的消息");
     }
 
     /**

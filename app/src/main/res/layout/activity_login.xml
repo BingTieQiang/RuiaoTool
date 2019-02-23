@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dip"
             android:gravity="center"
-            android:text="瑞 澳 助 手"
+            android:text="智慧环保系统"
             android:textColor="#ffffff"
             android:textSize="24sp" />
 

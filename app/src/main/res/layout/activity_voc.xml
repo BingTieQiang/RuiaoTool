@@ -5,23 +5,303 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.ruiao.tools.voc.VocActivity">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/padding_top"
+            android:background="@color/chart_bg_1" />
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/chart_bg">
 
-    <android.support.design.widget.TabLayout
-        android:id="@+id/tablayout"
-        android:elevation="2dp"
-        android:outlineProvider="bounds"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_gravity="top"/>
-    <android.support.v4.view.ViewPager
-        android:id="@+id/viewpager"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+            <TextView
+                android:id="@+id/tv_city"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="VOC设备"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/tv_change_city"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="11dp"
+                android:text=""
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+        </RelativeLayout>
+        <LinearLayout
+            android:id="@+id/ll_select_dev"
+            android:layout_marginTop="5dp"
+            android:padding="10dp"
+            android:background="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:src="@mipmap/paifengshan"
+                android:layout_width="18dp"
+                android:layout_height="18dp" />
+            <TextView
+                android:id="@+id/tv_newDate"
+                android:layout_marginLeft="10dp"
+                android:textColor="@color/bbg"
+                android:text="点击选择 企业设备"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <LinearLayout
+            android:paddingTop="0dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:paddingBottom="2dp"
+            android:background="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:background="@drawable/default_btn_bg1"
+                android:layout_marginTop="2dp"
+                android:layout_marginLeft="2dp"
+                android:orientation="horizontal"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="20dp">
+                <TextView
+                    android:textColor="@color/white"
+                    android:textSize="12sp"
+                    android:gravity="center"
+                    android:background="@color/bbg"
+                    android:text="企业"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="20dp" />
+                <TextView
+                    android:id="@+id/fac_name"
+                    android:textSize="12sp"
+                    android:gravity="center"
+                    android:text=""
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="20dp" />
+            </LinearLayout>
+
+        </LinearLayout>
+        <LinearLayout
+            android:paddingTop="0dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:paddingBottom="2dp"
+            android:background="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:background="@drawable/default_btn_bg1"
+                android:layout_marginTop="2dp"
+                android:layout_marginLeft="2dp"
+                android:orientation="horizontal"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="20dp">
+                <TextView
+                    android:textColor="@color/white"
+                    android:textSize="12sp"
+                    android:gravity="center"
+                    android:background="@color/bbg"
+                    android:text="设备名称"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="20dp" />
+                <TextView
+                    android:id="@+id/dev_name"
+                    android:textSize="12sp"
+                    android:gravity="center"
+                    android:text=""
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="20dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:background="@drawable/default_btn_bg1"
+                android:layout_marginTop="2dp"
+                android:layout_marginLeft="2dp"
+                android:orientation="horizontal"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="20dp">
+                <TextView
+                    android:id="@+id/arr1"
+                    android:textColor="@color/white"
+                    android:textSize="12sp"
+                    android:gravity="center"
+                    android:background="@color/bbg"
+                    android:text="VOC1"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="20dp" />
+                <TextView
+                    android:id="@+id/voc1"
+                    android:textSize="12sp"
+                    android:gravity="center"
+                    android:text=""
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="20dp" />
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:paddingTop="0dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:paddingBottom="2dp"
+            android:background="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:background="@drawable/default_btn_bg1"
+                android:layout_marginTop="2dp"
+                android:layout_marginLeft="2dp"
+                android:orientation="horizontal"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="20dp">
+                <TextView
+                    android:id="@+id/arr2"
+                    android:textColor="@color/white"
+                    android:textSize="12sp"
+                    android:gravity="center"
+                    android:background="@color/bbg"
+                    android:text="VOC2"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="20dp" />
+                <TextView
+                    android:id="@+id/voc2"
+                    android:textSize="12sp"
+                    android:gravity="center"
+                    android:text=""
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="20dp" />
+            </LinearLayout>
+            <LinearLayout
+                android:visibility="invisible"
+                android:background="@drawable/default_btn_bg1"
+                android:layout_marginTop="2dp"
+                android:layout_marginLeft="2dp"
+                android:orientation="horizontal"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="20dp">
+                <TextView
+                    android:id="@+id/arr3"
+                    android:textColor="@color/white"
+                    android:textSize="12sp"
+                    android:gravity="center"
+                    android:background="@color/bbg"
+                    android:text="参数四"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="20dp" />
+                <TextView
+                    android:id="@+id/arr3context"
+                    android:textSize="12sp"
+                    android:gravity="center"
+                    android:text=""
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="20dp" />
+            </LinearLayout>
+
+        </LinearLayout>
+        <LinearLayout
+            android:paddingLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp"
+            android:background="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:src="@mipmap/imgic"
+                android:layout_width="18dp"
+                android:layout_height="18dp" />
+            <TextView
+                android:layout_marginLeft="10dp"
+                android:textColor="@color/bbg"
+                android:text="最近12小时数据"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <com.github.mikephil.charting.charts.LineChart
+            android:layout_marginTop="5dp"
+            android:id="@+id/lineChart"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_centerInParent="true"/>
+        <TextView
+            android:layout_marginTop="10dp"
+            android:textSize="12sp"
+            android:background="@color/white"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/black"
+            android:text="注：VOC报警器"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <LinearLayout
+            android:paddingLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:paddingBottom="5dp"
+            android:paddingTop="10dp"
+            android:background="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:src="@mipmap/img121"
+                android:layout_width="18dp"
+                android:layout_height="18dp" />
+            <TextView
+                android:layout_marginLeft="10dp"
+                android:textColor="@color/bbg"
+                android:text="查询历史"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginTop="5dp"
+            android:background="@color/white"
+            android:orientation="horizontal"
+            android:paddingLeft="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:id="@+id/histroy"
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:src="@mipmap/img_h1"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp" />
+                <TextView
+                    android:text="历史数据"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+        </LinearLayout>
     </LinearLayout>
+    </ScrollView>
 </android.support.constraint.ConstraintLayout>

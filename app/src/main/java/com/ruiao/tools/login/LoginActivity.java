@@ -152,7 +152,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                       SPUtils.put(context,"BASE","http://222.223.112.252:11888/");
                       break;
                   case 2:
-                      SPUtils.put(context,"BASE","http://110.249.145.94:11888/");      //宁晋
+                      SPUtils.put(context,"BASE","http://183.196.173.163:11888/");      //宁晋
                       break;
               }
             }

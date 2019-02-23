@@ -18,6 +18,7 @@ import com.loopj.android.http.RequestParams;
 import com.ruiao.tools.R;
 import com.ruiao.tools.url.URLConstants;
 import com.ruiao.tools.utils.AsynHttpTools;
+import com.ruiao.tools.utils.SPUtils;
 import com.ruiao.tools.utils.StatusBarUtil;
 import com.ruiao.tools.utils.ToastHelper;
 import com.ruiao.tools.widget.Pbdialog;
@@ -171,8 +172,15 @@ public class WuRanHistroyActivity extends AppCompatActivity {
                             JSONArray liuiang = response.getJSONArray("流量");
                             JSONArray cod = response.getJSONArray("COD");
                             JSONArray nh3n = response.getJSONArray("氨氮");
-                            JSONArray zonlin = response.getJSONArray("总磷");
-                            JSONArray zongdan = response.getJSONArray("总氮");
+                            JSONArray zonlin = null;
+                            if(response.has("总磷")){
+                                 zonlin = response.getJSONArray("总磷");
+                            }
+                            JSONArray zongdan = null;
+                            if(response.has("总氮")){
+                                zongdan = response.getJSONArray("总氮");
+                            }
+
                             for (int i = 0; i < liuiang.length(); i++) {
                                 WuranBean bean = new WuranBean();
                                 bean.devtype = isGas;
@@ -185,12 +193,16 @@ public class WuRanHistroyActivity extends AppCompatActivity {
 
                                 tem = nh3n.getJSONObject(i);
                                 bean.SMnh3n = "" + tem.getDouble("value");
+                                if(response.has("总磷")){
+                                    tem = zonlin.getJSONObject(i);
+                                    bean.SMzonlin = "" + tem.getDouble("value");
+                                }
 
-                                tem = zonlin.getJSONObject(i);
-                                bean.SMzonlin = "" + tem.getDouble("value");
+                                if(response.has("总氮")){
+                                    tem = zongdan.getJSONObject(i);
+                                    bean.SMzondan = "" + tem.getDouble("value");
+                                }
 
-                                tem = zongdan.getJSONObject(i);
-                                bean.SMzondan = "" + tem.getDouble("value");
 
                                 bean.id = i;
                                 beans.add(bean);
@@ -209,8 +221,15 @@ public class WuRanHistroyActivity extends AppCompatActivity {
                             JSONArray liuliangpingjun = response.getJSONArray("流量平均值");
                             JSONArray andan = response.getJSONArray("氨氮平均值");
                             JSONArray codpingjun = response.getJSONArray("COD平均值");
-                            JSONArray zonlin = response.getJSONArray("总磷平均值");
-                            JSONArray zongdan = response.getJSONArray("总氮平均值");
+
+                            JSONArray zonlin = null;
+                            JSONArray zongdan = null;
+                            String base = (String)SPUtils.get(context,"BASE","");
+                            if(!base.startsWith("http://222.222.220.218")){      //晋州无此数据
+                                 zonlin = response.getJSONArray("总磷平均值");
+                                 zongdan = response.getJSONArray("总氮平均值");
+                            }
+
                             for (int i = 0; i < liuliangpingjun.length(); i++) {
                                 WuranBean bean = new WuranBean();
                                 bean.devtype = isGas;
@@ -224,11 +243,14 @@ public class WuRanHistroyActivity extends AppCompatActivity {
                                 tem = codpingjun.getJSONObject(i);
                                 bean.CODPinJun = "" + tem.getDouble("value");
 
-                                tem = zonlin.getJSONObject(i);
-                                bean.zonlinPingJun = "" + tem.getDouble("value");
+                                if(!base.startsWith("http://222.222.220.218")){      //晋州无此数据
+                                    tem = zonlin.getJSONObject(i);
+                                    bean.zonlinPingJun = "" + tem.getDouble("value");
+                                    tem = zongdan.getJSONObject(i);
+                                    bean.zondanPingJun = "" + tem.getDouble("value");
+                                }
 
-                                tem = zongdan.getJSONObject(i);
-                                bean.zondanPingJun = "" + tem.getDouble("value");
+
                                 bean.id = i;
                                 beans.add(bean);
                             }
