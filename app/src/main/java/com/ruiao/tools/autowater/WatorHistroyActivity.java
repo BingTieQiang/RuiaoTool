@@ -21,6 +21,7 @@ import com.ruiao.tools.R;
 import com.ruiao.tools.url.URLConstants;
 import com.ruiao.tools.utils.AsynHttpTools;
 import com.ruiao.tools.utils.SPUtils;
+import com.ruiao.tools.utils.StatusBarUtil;
 import com.ruiao.tools.utils.ToastHelper;
 import com.ruiao.tools.voc.VocBean;
 import com.ruiao.tools.widget.Pbdialog;
@@ -64,6 +65,7 @@ public class WatorHistroyActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wator_histroy);
         context = this;
+        StatusBarUtil.darkMode(this);
         ButterKnife.bind(this);
         adapter = new DataAdapter(context, mDataList);
         initView();
@@ -74,16 +76,16 @@ public class WatorHistroyActivity extends Activity {
                 switch (tag) {
                     case "分钟数据":
                         type = "fen";
-
+                        Log.d("type",type);
                         break;
 
                     case "小时数据":
                         type = "xiaoshi";
-
+                        Log.d("type",type);
                         break;
                     case "日数据":
                         type = "tian";
-
+                        Log.d("type",type);
                         break;
 
                     default:
@@ -103,26 +105,17 @@ public class WatorHistroyActivity extends Activity {
             public void onTimeSelect(Date date, View v) {
 
                 if (type.equals("fen")) {
-                    if ((date.getTime()) > (nowTime.getTime() - 2 * 60 * 60 * 1000)) {
-                        ToastHelper.shortToast(context, "此时间段无数据");
-                        return;
-                    }
+
                     initData(format.format(date), format.format(new Date(date.getTime() - 1 * 60 * 60 * 1000)), "fen");
                     tvNewDate.setText( format.format(new Date(date.getTime() - 1 * 60 * 60 * 1000))+"->"+format.format(date));
                 } else if (type.equals("xiaoshi")) {
-                    if ((date.getTime()) > (nowTime.getTime() - 2 * 60 * 60 * 1000)) {
-                        ToastHelper.shortToast(context, "此时间段无数据");
-                        return;
-                    }
+
 
                     initData(format.format(date), format.format(new Date(date.getTime() - 24 * 60 * 60 * 1000)), "xiaoshi");
                     String str = format.format(new Date(date.getTime() - 24 * 60 * 60 * 1000))+"->"+format.format(date);
                     tvNewDate.setText(str);
                 } else if (type.equals("tian")) {
-                    if ((date.getTime()) > (date.getTime() - 2 * 60 * 60 * 1000)) {
-                        ToastHelper.shortToast(context, "此时间段无数据");
-                        return;
-                    }
+
                     initData(format.format(date), format.format(new Date(date.getTime() - 7 * 24 * 60 * 60 * 1000)), "tian");
                     tvNewDate.setText(format.format(new Date(date.getTime() - 24 * 60 * 60 * 1000))+"->"+format.format(date));
                 }
@@ -197,7 +190,7 @@ public class WatorHistroyActivity extends Activity {
         pa.add("end", end);
         pa.add("type", typex);
         pa.add("MonitorID", MonitorID);
-
+        mDataList.clear();
         dialog = showdialog(this, "正在加载.......");
 
         AsynHttpTools.httpGetMethodByParams(URLConstants.IC, pa, new JsonHttpResponseHandler("GB2312") {
@@ -231,40 +224,35 @@ public class WatorHistroyActivity extends Activity {
                     if (base.startsWith("http://222.222.220.218")) {   //"晋州"
                         address = 1;
                     }
-
-
                     Boolean status = response.getBoolean("success");
                     if (status) {
                         beans.clear();
-                        WatorBean bean = new WatorBean();
+                        WatorBean bean = null;
 
                         JSONArray voclist1 = null;
                         JSONArray voclist2 = null;
 
                         if(type.equals("fen")){
                             voclist1 = response.getJSONArray("COD");
-                            voclist2 = response.getJSONArray("NH3N");
+                            voclist2 = response.getJSONArray("氨氮");
                         }else {
                             voclist1 = response.getJSONArray("COD平均值");
                             voclist2 = response.getJSONArray("氨氮平均值");
                         }
 
-
+                        beans.add(new WatorBean("时间","COD","氨氮"));
                         JSONObject vocbean1 = null;
                         JSONObject vocbean2 = null;
-                        beans.add(new WatorBean("时间","COD","氨氮"));
+//                        beans.add(new WatorBean("时间","COD","氨氮"));
                         for (int i = 0; i < voclist1.length(); i++) {
                             vocbean1 = voclist1.getJSONObject(i);
                             vocbean2 = voclist2.getJSONObject(i);
-                            bean.date = vocbean1.getString("id");
-
-                            bean.cod = vocbean1.getString("value");
-                            bean.dan = vocbean2.getString("value");
+                            bean = new WatorBean(vocbean1.getString("id"),""+vocbean1.getDouble("value"),""+vocbean2.getDouble("value"));
                             beans.add(bean);
                         }
 
                         mDataList.addAll(beans);
-                        listview.notify();
+                        adapter.notifyDataSetChanged();
 
                     } else {
                         ToastHelper.shortToast(context, response.getString("message"));

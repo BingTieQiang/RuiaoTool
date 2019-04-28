@@ -297,7 +297,7 @@ public class VocActivity extends AppCompatActivity {
                     Boolean status = response.getBoolean("success");
                     if (status) {
                         beans.clear();
-                        VocBean bean = new VocBean();
+                        VocBean bean = null;
 
                         JSONArray voclist1 = response.getJSONArray("VOC1平均值");
                         JSONArray voclist2 = response.getJSONArray("VOC2平均值");
@@ -307,6 +307,7 @@ public class VocActivity extends AppCompatActivity {
                         for(int i = 0; i < voclist1.length(); i++){
                             vocbean1 = voclist1.getJSONObject(i);
                             vocbean2 = voclist2.getJSONObject(i);
+                            bean= new VocBean();
                             bean.date = vocbean1.getString("id");
                             bean.voc1 = vocbean1.getString("value");
                             bean.voc2 = vocbean2.getString("value");

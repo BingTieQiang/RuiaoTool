@@ -15,14 +15,15 @@ android {
             storePassword '123456'
         }
     }
-    compileSdkVersion compileSdk
-//    buildToolsVersion '26.0.2'
+
+    compileSdkVersion 26
+    buildToolsVersion '26.0.2'
     defaultConfig {
         applicationId "com.ruiao.tools"
         minSdkVersion 19
         targetSdkVersion targetSdk
-        versionCode 13
-        versionName "V2.3"
+        versionCode 31
+        versionName "V3.0"
         multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         manifestPlaceholders = [
@@ -37,90 +38,66 @@ android {
     }
     compileOptions {
         encoding "UTF-8"
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
     lintOptions {
         abortOnError false
     }
     dexOptions {
         javaMaxHeapSize "4g"
+
     }
     buildTypes {
         debug {
-
             signingConfig signingConfigs.debug_userkey
         }
-
-//        release {
-//            buildConfigField "String", "BASE_URL", "\"http://wewew\""
-//            //移除无用res文件
-//            shrinkResources true
-//            //混淆
-//            minifyEnabled true
-//            useProguard true
-//            zipAlignEnabled true
-//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-//            signingConfig signingConfigs.release
-//            //    release包的命名格式为：产品名_版本号_渠道名_打包时间_online.apk
-////    debug包的命名格式为：产品名_版本号_渠道名_打包时间_dev.apk
-//            applicationVariants.all { variant ->
-//                variant.outputs.each { output ->
-//                    def outputFile = output.outputFile
-//
-//                    if (null != outputFile && outputFile.name.endsWith('.apk')) {
-//                        File outputDir = new File(outputFile.parent);
-//                        def baseName = PRODUCT_NAME + "_" + "${defaultConfig.versionName}"
-//                        if (buildType.name == 'release') {
-//                            baseName = baseName + "_online.apk"
-//                        } else if (buildType.name == 'debug') {
-//                            baseName = baseName + "_dev.apk"
-//                        }else if (buildType.name == 'preview') {
-//                            baseName = baseName + "_pre.apk"
-//                        }
-//                        output.outputFile = new File(outputDir, baseName)
-//                    }
-//                }
-//            }
-//
-//        }
-
     }
     productFlavors {
     }
+    buildToolsVersion '26.0.2'
 }
 
 dependencies {
+    //    implementation 'com.android.support:support-v4:27.1.1'
     compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
+    implementation 'com.allenliu.versionchecklib:library:2.1.9'
     testCompile 'junit:junit:4.12'
-    compile 'com.getui:sdk:2.12.3.0'
+    implementation 'com.getui:sdk:2.12.3.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
-    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     api "com.android.support:appcompat-v7:$support_library_version"
     api "com.android.support:support-v4:$support_library_version"
     api "com.android.support:design:$support_library_version"
     api "com.android.support:recyclerview-v7:$support_library_version"
-    compile 'com.google.code.gson:gson:2.8.0'
-    compile 'com.squareup.picasso:picasso:2.5.2'
-    compile 'com.squareup.okhttp3:okhttp:3.6.0'
-    compile 'com.bigkoo:convenientbanner:2.0.5'
-    compile 'com.jakewharton:butterknife:8.5.1'
-    compile 'com.orhanobut:logger:2.1.1'
-    compile 'com.android.support:multidex:1.0.1'
-    compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.3'
-    compile 'com.github.hackware1993:MagicIndicator:1.5.0'
+    implementation 'com.google.code.gson:gson:2.8.0'
+    implementation 'com.squareup.picasso:picasso:2.5.2'
+    implementation 'com.squareup.okhttp3:okhttp:3.6.0'
+    implementation 'com.bigkoo:convenientbanner:2.0.5'
+    implementation 'com.jakewharton:butterknife:8.5.1'
+    implementation 'com.orhanobut:logger:2.1.1'
+    implementation 'com.android.support:multidex:1.0.1'
+    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.3'
+//    implementation 'com.github.hackware1993:MagicIndicator:1.5.0'
     implementation project(':rollviewpager')
-    compile 'com.github.razerdp:BasePopup:1.9.4'
+    implementation 'com.github.razerdp:BasePopup:1.9.4'
     implementation files('libs/android-async-http-1.4.8.jar')
     implementation files('libs/org.apache.http.legacy.jar')
-    compile 'com.contrarywind:Android-PickerView:4.1.3'
-    compile 'com.jcodecraeer:xrecyclerview:1.5.9'
-    compile 'com.ramotion.foldingcell:folding-cell:1.2.2'
-    compile 'com.github.PhilJay:MPAndroidChart:v3.0.2'
-    compile 'com.wang.avi:library:2.1.3'
-    //    compile 'me.gujun.android.taggroup:library:1.4@aar'
+    implementation 'com.contrarywind:Android-PickerView:4.1.3'
+    implementation 'com.jcodecraeer:xrecyclerview:1.5.9'
+    implementation 'com.ramotion.foldingcell:folding-cell:1.2.2'
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.0.2'
+    implementation 'com.wang.avi:library:2.1.3'
+    implementation 'com.github.abel533:ECharts:3.0.0.2'
     compile project(path: ':easypermissions')
     compile project(path: ':taglib')
-    implementation files('libs/com.baidu.tts_2.3.2.20180419_5a5fec8.jar')
+    implementation project(':takephoto_library')
+    configurations.all {
+        resolutionStrategy.force 'com.android.support:appcompat-v7:27.0.2'
+
+    }
+    implementation files('libs/BaiduLBS_Android.jar')
 }

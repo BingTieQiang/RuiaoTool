@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.baidu.mapapi.map.MapView
+            android:id="@+id/bmapView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="0dp"
+            android:clickable="true"/>
+
+
+
+        <RelativeLayout
+            android:id="@+id/rr_tongjitupian"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/dtsz_tb">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="5dp"
+                android:text="AQI" />
+
+        </RelativeLayout>
+        <LinearLayout
+            android:id="@+id/ll_tongjitupian"
+            android:layout_marginLeft="15dp"
+            android:layout_below="@id/rr_tongjitupian"
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/pm25"
+                android:layout_marginTop="3dp"
+                android:background="@color/word_bg1"
+                android:text="PM2.5"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/pm100"
+                android:layout_marginTop="3dp"
+                android:background="@color/word_bg1"
+                android:text="PM100"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/o3"
+                android:layout_marginTop="3dp"
+                android:background="@color/word_bg1"
+                android:text="臭氧"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/so2"
+                android:layout_marginTop="3dp"
+                android:background="@color/word_bg1"
+                android:text="二氧化硫"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/no2"
+                android:layout_marginTop="3dp"
+                android:background="@color/word_bg1"
+                android:text="二氧化氮"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/co"
+                android:layout_marginTop="3dp"
+                android:background="@color/word_bg1"
+                android:text="一氧化碳"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+</LinearLayout>

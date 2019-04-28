@@ -100,7 +100,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                         if( "true" .endsWith( response.getString("success"))){
                             SPUtils.put(context,"login",true);  //登录已经登录
-                            SPUtils.put(context,"username",et_name.getText().toString().trim());  //保存用户名字
+                            SPUtils.put(context,"username","15801299706");  //保存用户名字
+                            SPUtils.put(context,"username1",et_name.getText().toString().trim());  //保存用户名字
 
                             startActivity(new Intent(context, MainActivity.class));
                             finish();

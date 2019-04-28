@@ -11,6 +11,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
@@ -19,10 +21,14 @@ import com.loopj.android.http.RequestParams;
 import com.ruiao.tools.R;
 import com.ruiao.tools.about.AboutActivity;
 import com.ruiao.tools.alarm.AlarmActivity;
+import com.ruiao.tools.dongtaiguankong.TaskBean;
+import com.ruiao.tools.dongtaiguankong.TaskDetailActivity;
+import com.ruiao.tools.dongtaiguankong.TaskListAdapter;
 import com.ruiao.tools.notice.NoticeBean;
 import com.ruiao.tools.ui.base.BaseFragment;
 import com.ruiao.tools.url.URLConstants;
 import com.ruiao.tools.utils.AsynHttpTools;
+import com.ruiao.tools.utils.HttpUtil;
 import com.ruiao.tools.utils.PackageUtils;
 import com.ruiao.tools.utils.SPUtils;
 import com.ruiao.tools.utils.ToastHelper;
@@ -42,8 +48,13 @@ import butterknife.BindView;
 
 public class NoticeFragment extends BaseFragment {
     private ArrayList<com.ruiao.tools.notice.NoticeBean> mDataList = new ArrayList<>();
+
+    TaskListAdapter adapter1;
+    ArrayList<TaskBean> list = new ArrayList<>();
     @BindView(R.id.listview)
-    XRecyclerView recyclerview;
+    XRecyclerView list_task;
+    @BindView(R.id.list_task)
+    ListView recyclerview;
     private int Page = 1;
     private int Rows = 7;
     DataAdapter adapter = null;
@@ -57,6 +68,75 @@ public class NoticeFragment extends BaseFragment {
     protected void initViewsAndEvents(View rootView, Bundle savedInstanceState) {
         initView();
         upData();
+    }
+
+    private void initView2() {
+
+        adapter1 = new TaskListAdapter(getContext(),list);
+        recyclerview.setAdapter(adapter1);
+        recyclerview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                TaskBean bean = (TaskBean) adapterView.getItemAtPosition(position);
+                Intent intent = new Intent(getContext(), TaskDetailActivity.class);
+                intent.putExtra("task",bean);
+                startActivity(intent);
+            }
+        });
+
+    }
+
+    private void upData2() {
+        RequestParams pa = new RequestParams();
+        //taskname=XXX&Act=XXX
+        pa.put("taskname", SPUtils.get(getContext(),"username",""));
+        pa.put("Act","0,1");
+        HttpUtil.get(URLConstants.TASKLIST,pa,new HttpUtil.SimpJsonHandle(getContext()){
+            @Override
+            public void onStart() {
+                super.onStart();
+
+            }
+            @Override
+            public void onFinish() {
+                super.onFinish();
+
+            }
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                list.clear();
+                try {
+                    if( response.getBoolean("success")){
+                        JSONArray arr = response.getJSONArray("tasklist");
+                        JSONObject temp;
+                        for(int i = 0;i<arr.length();i++){
+                            TaskBean bean = new TaskBean();
+                            temp = arr.getJSONObject(i);
+                            bean.id =  temp.getString("id");
+                            bean.address =  temp.getString("address");
+                            bean.people = temp.getString("people");
+                            bean.time =  temp.getString("time");
+                            bean.status =  temp.getString("status");
+                            bean.car =  temp.getString("car");
+//                            JSONArray array =  temp.getJSONArray("context");
+//                            for(int j=0;j<array.length();j++){
+//                                bean.tips.add( array.getJSONObject(j).getString("tip"));
+//                            }
+                            bean.context = temp.getString("context");
+                            list.add(bean);
+                        }
+                        adapter1.notifyDataSetChanged();
+                    }else {
+                        ToastHelper.shortToast(getContext(),response.getString("message"));
+                        adapter1.notifyDataSetChanged();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
     }
 
 
@@ -76,16 +156,16 @@ public class NoticeFragment extends BaseFragment {
 //        recyclerview.setAdapter(adapter);
 
         adapter = new DataAdapter(mContext, mDataList);
-        recyclerview.setAdapter(adapter);
+        list_task.setAdapter(adapter);
         LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);
         //设置布局管理器
-        recyclerview.setLayoutManager(layoutManager);
+        list_task.setLayoutManager(layoutManager);
         //设置分割符号
 
         //禁止加载更多
-        recyclerview.setLoadingMoreEnabled(true);
+        list_task.setLoadingMoreEnabled(true);
 
-        recyclerview.setLoadingListener(new XRecyclerView.LoadingListener() {
+        list_task.setLoadingListener(new XRecyclerView.LoadingListener() {
             @Override
             public void onRefresh() {
                 Page = 1;
@@ -100,7 +180,7 @@ public class NoticeFragment extends BaseFragment {
 
     }
 
-    //Page 页数  Rows每页几行
+//    //Page 页数  Rows每页几行
     public void upData() {
         RequestParams pa = new RequestParams();
         pa.put("username", SPUtils.get(getContext(), "username", ""));
@@ -117,9 +197,9 @@ public class NoticeFragment extends BaseFragment {
             public void onFinish() {
                 super.onFinish();
                 if (Page == 2) {
-                    recyclerview.refreshComplete();
+                    list_task.refreshComplete();
                 } else {
-                    recyclerview.loadMoreComplete();
+                    list_task.loadMoreComplete();
                 }
 
 
@@ -182,14 +262,6 @@ public class NoticeFragment extends BaseFragment {
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             ViewHolder viewHolder = new ViewHolder(mLayoutInflater.inflate(R.layout.item_message, parent, false));
-//            viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    Intent intent = new Intent(context, AlarmActivity.class);
-//                    intent.putExtra("bean",mDataList)
-//                    context .startActivity(intent);
-//                }
-//            });
             return viewHolder;
         }
 

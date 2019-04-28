@@ -1,1 +1,1 @@
-include ':app', ':rollviewpager', ':easypermissions', ':taglib'
+include ':app', ':rollviewpager', ':easypermissions', ':taglib' ,'takephoto_library'

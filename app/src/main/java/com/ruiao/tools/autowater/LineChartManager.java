@@ -131,39 +131,6 @@ public class LineChartManager {
             }
         });
 
-        /*
-        xAxis.setValueFormatter(new IAxisValueFormatter() {
-            @Override
-            public String getFormattedValue(float value, AxisBase axis) {
-                int pos = (int) value;
-                if(0==type)
-                { //分钟数据  60个数据 10 个坐标，间隔6分钟
-                    try {
-                        return pos%6 == 0 ? formatSorMin.format(formatSor.parse(beans.get(pos).data)):"";
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-
-                    return pos%6==0 ? beans.get(pos).data:"";
-                }
-                else if(1==type) //小时数据 7个数
-                {
-
-                    try {
-                        return pos%3==0 ? formatResHour.format(formatSor.parse(beans.get(pos).data)):"";
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-                }
-                else if(2==type) //日数据 7天
-                {
-                    return  (pos < beans.size()-1)?beans.get(pos).data:"";
-                }
-                return  "";
-            }
-        });
-
-*/
     }
 
 

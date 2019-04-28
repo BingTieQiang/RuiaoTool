@@ -1,14 +1,17 @@
 package com.ruiao.tools.ui.fragment.maintab;
 
 import android.Manifest;
+import android.app.Dialog;
 import android.app.NotificationManager;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AlertDialog;
 import android.text.Html;
@@ -16,10 +19,18 @@ import android.text.Spanned;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.allenliu.versionchecklib.v2.AllenVersionChecker;
+import com.allenliu.versionchecklib.v2.builder.DownloadBuilder;
+import com.allenliu.versionchecklib.v2.builder.NotificationBuilder;
+import com.allenliu.versionchecklib.v2.builder.UIData;
+import com.allenliu.versionchecklib.v2.callback.CustomDownloadingDialogListener;
+import com.allenliu.versionchecklib.v2.callback.CustomVersionDialogListener;
+import com.allenliu.versionchecklib.v2.callback.RequestVersionListener;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.FileAsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -27,11 +38,13 @@ import com.loopj.android.http.RequestParams;
 import com.ruiao.tools.R;
 import com.ruiao.tools.about.AboutActivity;
 import com.ruiao.tools.login.LoginActivity;
+import com.ruiao.tools.ui.BaseDialog;
 import com.ruiao.tools.ui.activity.MainActivity;
 import com.ruiao.tools.ui.base.BaseFragment;
 import com.ruiao.tools.url.URLConstants;
 import com.ruiao.tools.utils.AppUtil;
 import com.ruiao.tools.utils.AsynHttpTools;
+import com.ruiao.tools.utils.HttpUtil;
 import com.ruiao.tools.utils.PackageUtils;
 import com.ruiao.tools.utils.SPUtils;
 import com.ruiao.tools.utils.ToastHelper;
@@ -66,6 +79,7 @@ public class MineFragment extends BaseFragment implements EasyPermissions.Permis
     @BindView(R.id.rr_about)
     RelativeLayout about;  //关于软件
     Unbinder unbinder;
+    private DownloadBuilder builder;
     private static final int WRITE_EXTERNAL_STORAGE = 122;
 
     @Override
@@ -109,7 +123,7 @@ public class MineFragment extends BaseFragment implements EasyPermissions.Permis
                 activity.speek();
                 break;
             case R.id.rr_newversion:
-                newVersion();
+                sendRequest();
                 break;
             case R.id.rr_about:  //关于软件
                 startActivity(new Intent(mContext, AboutActivity.class));
@@ -126,148 +140,8 @@ public class MineFragment extends BaseFragment implements EasyPermissions.Permis
         }
     }
 
-    private void newVersion() {
-        RequestParams pa = new RequestParams();
-//        pa.add("username", (String) SPUtils.get(MainActivity.this,"username",""));
-        AsynHttpTools.httpGetMethodByParams(URLConstants.VERSION, pa, new JsonHttpResponseHandler("GB2312") {
-            @Override
-            public void onFinish() {
-                super.onFinish();
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                throwable.printStackTrace();
-            }
-
-            @Override
-            public void onFailure(int code, Header[] heads, Throwable throwable, JSONObject json) {
-
-                throwable.printStackTrace();
-
-            }
-
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                try {
-                    url = response.getString("url");
-                    final long size = response.getLong("size");
-                    int version = response.getInt("version");
-                    int versionCode = PackageUtils.getVersionCode(mContext);
-                    if (version > versionCode) {
-                        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-                        Spanned spanned = Html.fromHtml(response.getString("describe"));
-                        builder.setTitle(Html.fromHtml("版本更新"));
-                        builder.setMessage(spanned);
-                        builder.setCancelable(false);
-                        builder.setPositiveButton("更新", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
 
 
-                                startPermissTask();
-
-
-                            }
-                        });
-                        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                dialogInterface.dismiss();
-                            }
-                        });
-                        builder.show();
-                    } else {
-                        ToastHelper.shortToast(mContext, "已经是最新版本");
-
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        });
-    }
-
-    /**
-     * 下载APK包，并且安装
-     *
-     * @param totalByte
-     */
-    private void downApp(final long totalByte, String url) {
-        progressDialog = new ProgressDialog(mContext);
-        progressDialog.setMax(100);
-        progressDialog.setTitle("正在下载");
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-        if (true) {//非强制更新允许后台更新
-            progressDialog.setCancelable(true);
-            progressDialog.setButton(ProgressDialog.BUTTON_NEGATIVE, "后台更新", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    mNotifyManager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
-                    mBuilder = new NotificationCompat.Builder(mContext);
-                    mBuilder.setContentTitle("版本更新")
-                            .setContentText("正在下载...")
-                            .setContentInfo("0%")
-                            .setSmallIcon(R.drawable.icon_cloudy);
-                }
-            });
-
-        } else {
-            progressDialog.setCancelable(false);
-        }
-        progressDialog.show();
-        String apkpath = Environment.getExternalStorageDirectory().getAbsolutePath()
-                + File.separator + "phone.apk";
-        AsyncHttpClient client = new AsyncHttpClient();
-        client.setTimeout(1000);
-        client.get(url, new FileAsyncHttpResponseHandler(new File(apkpath)) {
-
-            @Override
-            public void onFailure(int i, Header[] headers, Throwable throwable, File file) {
-
-            }
-
-            @Override
-            public void onSuccess(int i, Header[] headers, File file) {
-
-                if (mNotifyManager != null) {
-                    mBuilder.setContentText("正在下载...")
-                            // Removes the progress bar
-                            .setProgress(0, 0, false);
-                    mNotifyManager.notify(1, mBuilder.build());
-                    mNotifyManager.cancel(1);
-                }
-                //开始安装
-                AppUtil.installApp(mContext, file.getPath());
-
-            }
-
-            @Override
-            public void onProgress(long bytesWritten, long totalSize) {
-                super.onProgress(bytesWritten, totalSize);
-
-                int count = (int) ((bytesWritten * 1.0 / totalSize) * 100);
-                if (mBuilder != null) {
-                    mBuilder.setProgress(100, count, false);
-                    mBuilder.setContentInfo(count + "%");
-
-                    mNotifyManager.notify(1, mBuilder.build());
-                }
-
-
-                progressDialog.setProgress(count);
-
-
-            }
-
-            @Override
-            public void onStart() {
-                super.onStart();
-            }
-        });
-
-    }
 
     /**
      * 检查是否有权限
@@ -277,8 +151,7 @@ public class MineFragment extends BaseFragment implements EasyPermissions.Permis
         if (EasyPermissions.hasPermissions(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
             // Have permission, do the thing!
 //            Toast.makeText(getActivity(), "WRITE_EXTERNAL_STORAGE", Toast.LENGTH_LONG).show();
-            //拥有权限
-            downApp(100l, url);
+
         } else {
             // Request one permission
             EasyPermissions.requestPermissions(this, "更新软件需要存储空间，请允许", WRITE_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE);
@@ -320,5 +193,119 @@ public class MineFragment extends BaseFragment implements EasyPermissions.Permis
     @Override
     public void getmsg() {
 
+    }
+
+
+    private void sendRequest() {
+
+        builder = AllenVersionChecker
+                .getInstance()
+                .requestVersion()
+                .setRequestUrl("http://app.lulibo.xyz/ruiao")
+                .request(new RequestVersionListener() {
+                    @Nullable
+                    @Override
+                    public UIData onRequestVersionSuccess(String result) {
+                        try {
+                            JSONObject json = new JSONObject(result);
+                            return crateUIData(json.getString("title"),json.getString("context"),json.getString("url"));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+
+                        return crateUIData("","","");
+                    }
+
+                    @Override
+                    public void onRequestVersionFailure(String message) {
+                        Toast.makeText(getContext(), "request failed", Toast.LENGTH_SHORT).show();
+
+                    }
+                }).setShowDownloadingDialog(true)
+                .setShowNotification(true)
+                .setShowDownloadFailDialog(true)
+                .setCustomVersionDialogListener(createCustomDialogTwo())
+                .setCustomDownloadingDialogListener(createCustomDownloadingDialog())
+                .setDownloadAPKPath(Environment.getExternalStorageDirectory() + "/Ruiao/");
+        builder.executeMission(getContext());
+    }
+
+    private void checkVersion() {
+        HttpUtil.get("http://app.lulibo.xyz/ruiao",new RequestParams(),new HttpUtil.SimpJsonHandle(getContext()){
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                try {
+                    int version = response.getInt("version");
+                    if(getVersionCode(getContext())<version){
+                        sendRequest();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+
+    public static int getVersionCode(Context mContext) {
+        int versionCode = 0;
+        try {
+            //获取软件版本号，对应AndroidManifest.xml下android:versionCode
+            versionCode = mContext.getPackageManager().
+                    getPackageInfo(mContext.getPackageName(), 0).versionCode;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return versionCode;
+    }
+
+
+
+    private NotificationBuilder createCustomNotification() {
+        return NotificationBuilder.create()
+                .setRingtone(true)
+                .setIcon(R.mipmap.ic_launcher)
+                .setTicker("custom_ticker")
+                .setContentTitle("custom title")
+                .setContentText("custom 内容 ");
+    }
+    private UIData crateUIData(String title,String context,String url) {
+        UIData uiData = UIData.create();
+        uiData.setTitle(title);
+        uiData.setDownloadUrl(url);
+        uiData.setContent(context);
+        return uiData;
+    }
+
+    private CustomVersionDialogListener createCustomDialogTwo() {
+        return (context, versionBundle) -> {
+            BaseDialog baseDialog = new BaseDialog(context, R.style.BaseDialog, R.layout.custom_dialog_two_layout);
+            TextView textView = baseDialog.findViewById(R.id.tv_msg);
+            TextView title = baseDialog.findViewById(R.id.tv_title);
+            title.setText(versionBundle.getTitle());
+            textView.setText(versionBundle.getContent());
+            baseDialog.setCanceledOnTouchOutside(true);
+            return baseDialog;
+        };
+    }
+
+    private CustomDownloadingDialogListener createCustomDownloadingDialog() {
+        return new CustomDownloadingDialogListener() {
+            @Override
+            public Dialog getCustomDownloadingDialog(Context context, int progress, UIData versionBundle) {
+                BaseDialog baseDialog = new BaseDialog(context, R.style.BaseDialog, R.layout.custom_download_layout);
+                return baseDialog;
+            }
+
+            @Override
+            public void updateUI(Dialog dialog, int progress, UIData versionBundle) {
+                TextView tvProgress = dialog.findViewById(R.id.tv_progress);
+                ProgressBar progressBar = dialog.findViewById(R.id.pb);
+                progressBar.setProgress(progress);
+                tvProgress.setText(getString(R.string.versionchecklib_progress, progress));
+            }
+        };
     }
 }

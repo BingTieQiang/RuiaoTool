@@ -23,6 +23,7 @@
 </RelativeLayout>
 
     <com.jcodecraeer.xrecyclerview.XRecyclerView
+
         android:paddingTop="5dp"
         android:paddingLeft="8dp"
         android:id="@+id/listview"
@@ -30,6 +31,11 @@
         android:layout_height="match_parent">
 
     </com.jcodecraeer.xrecyclerview.XRecyclerView>
+    <ListView
+        android:visibility="gone"
+        android:id="@+id/list_task"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
 
 </LinearLayout>

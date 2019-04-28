@@ -21,6 +21,7 @@ import com.ruiao.tools.R;
 import com.ruiao.tools.url.URLConstants;
 import com.ruiao.tools.utils.AsynHttpTools;
 import com.ruiao.tools.utils.SPUtils;
+import com.ruiao.tools.utils.StatusBarUtil;
 import com.ruiao.tools.utils.ToastHelper;
 import com.ruiao.tools.widget.Pbdialog;
 
@@ -64,6 +65,7 @@ public class VocHistroyActivity extends Activity {
         setContentView(R.layout.activity_voc_histroy);
         context = this;
         ButterKnife.bind(this);
+        StatusBarUtil.darkMode(this);
         adapter = new DataAdapter(context, mDataList);
         initView();
         tagGroup.setTags(new String[]{"分钟数据", "小时数据", "日数据"});
@@ -102,26 +104,26 @@ public class VocHistroyActivity extends Activity {
             public void onTimeSelect(Date date, View v) {
 
                 if (type.equals("fen")) {
-                    if ((date.getTime()) > (nowTime.getTime() - 2 * 60 * 60 * 1000)) {
-                        ToastHelper.shortToast(context, "此时间段无数据");
-                        return;
-                    }
+//                    if ((date.getTime()) > (nowTime.getTime() - 2 * 60 * 60 * 1000)) {
+//                        ToastHelper.shortToast(context, "此时间段无数据");
+//                        return;
+//                    }
                     initData(format.format(date), format.format(new Date(date.getTime() - 1 * 60 * 60 * 1000)), "fen");
                     tvNewDate.setText( format.format(new Date(date.getTime() - 1 * 60 * 60 * 1000))+"->"+format.format(date));
                 } else if (type.equals("xiaoshi")) {
-                    if ((date.getTime()) > (nowTime.getTime() - 2 * 60 * 60 * 1000)) {
-                        ToastHelper.shortToast(context, "此时间段无数据");
-                        return;
-                    }
+//                    if ((date.getTime()) > (nowTime.getTime() - 2 * 60 * 60 * 1000)) {
+//                        ToastHelper.shortToast(context, "此时间段无数据");
+//                        return;
+//                    }
 
                     initData(format.format(date), format.format(new Date(date.getTime() - 24 * 60 * 60 * 1000)), "xiaoshi");
                     String str = format.format(new Date(date.getTime() - 24 * 60 * 60 * 1000))+"->"+format.format(date);
                     tvNewDate.setText(str);
                 } else if (type.equals("tian")) {
-                    if ((date.getTime()) > (date.getTime() - 2 * 60 * 60 * 1000)) {
-                        ToastHelper.shortToast(context, "此时间段无数据");
-                        return;
-                    }
+//                    if ((date.getTime()) > (date.getTime() - 2 * 60 * 60 * 1000)) {
+//                        ToastHelper.shortToast(context, "此时间段无数据");
+//                        return;
+//                    }
                     initData(format.format(date), format.format(new Date(date.getTime() - 7 * 24 * 60 * 60 * 1000)), "tian");
                     tvNewDate.setText(format.format(new Date(date.getTime() - 24 * 60 * 60 * 1000))+"->"+format.format(date));
                 }
@@ -196,7 +198,7 @@ public class VocHistroyActivity extends Activity {
         pa.add("end", end);
         pa.add("type", typex);
         pa.add("MonitorID", MonitorID);
-
+        mDataList.clear();
         dialog = showdialog(this, "正在加载.......");
 
         AsynHttpTools.httpGetMethodByParams(URLConstants.IC, pa, new JsonHttpResponseHandler("GB2312") {
@@ -235,7 +237,7 @@ public class VocHistroyActivity extends Activity {
                     Boolean status = response.getBoolean("success");
                     if (status) {
                         beans.clear();
-                        VocBean bean = new VocBean();
+                        VocBean bean = null;
 
                         JSONArray voclist1 = null;
                         JSONArray voclist2 = null;
@@ -254,6 +256,7 @@ public class VocHistroyActivity extends Activity {
                         for (int i = 0; i < voclist1.length(); i++) {
                             vocbean1 = voclist1.getJSONObject(i);
                             vocbean2 = voclist2.getJSONObject(i);
+                            bean = new VocBean();
                             bean.date = vocbean1.getString("id");
 
                             bean.voc1 = vocbean1.getString("value");
@@ -261,7 +264,7 @@ public class VocHistroyActivity extends Activity {
                             beans.add(bean);
                         }
                         mDataList.addAll(beans);
-                        listview.notify();
+                        adapter.notifyDataSetChanged();
 
                     } else {
                         ToastHelper.shortToast(context, response.getString("message"));

@@ -8,6 +8,22 @@
         <item>表格</item>
         <item>我的</item>
     </string-array>
+    <string-array name="gongkuang">
+        <item>地图</item>
+        <item>单站工况</item>
+        <item>实时工况</item>
+        <item>报警</item>
+
+    </string-array>
+
+    <string-array name="aqi">
+        <item>地图</item>
+        <item>实时数据</item>
+        <item>历史</item>
+
+
+    </string-array>
+
     <string-array name="main_tab_data">
         <item>第一页</item>
         <item>第二页</item>

@@ -46,9 +46,9 @@ ext {
 
     bintrayOrg = 'easygoogle'
 
-    support_library_version = '27.1.0'
-
-    compileSdk = 27
-    targetSdk = 27
+    support_library_version = '27.0.2'
+//    support_library_version = '26.1.0'
+    compileSdk = 26
+    targetSdk = 26
 }
 

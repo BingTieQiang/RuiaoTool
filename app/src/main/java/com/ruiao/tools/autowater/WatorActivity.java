@@ -300,16 +300,18 @@ public class WatorActivity extends AppCompatActivity {
                     Boolean status = response.getBoolean("success");
                     if (status) {
                         beans.clear();
-                        WatorBean bean = new WatorBean();
+                        WatorBean bean = null;
 
                         JSONArray voclist1 = response.getJSONArray("COD平均值");
                         JSONArray voclist2 = response.getJSONArray("氨氮平均值");
 
                         JSONObject vocbean1 = null;
                         JSONObject vocbean2 = null;
+
                         for(int i = 0; i < voclist1.length(); i++){
                             vocbean1 = voclist1.getJSONObject(i);
                             vocbean2 = voclist2.getJSONObject(i);
+                            bean = new WatorBean();
                             bean.date = vocbean1.getString("id");
                             bean.cod = vocbean1.getString("value");
                             bean.dan = vocbean2.getString("value");
