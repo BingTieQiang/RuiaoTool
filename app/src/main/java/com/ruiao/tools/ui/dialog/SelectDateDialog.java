@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import com.ruiao.tools.R;
 import com.ruiao.tools.widget.NumberPickerView;
-import com.orhanobut.logger.Logger;
+
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -203,7 +203,7 @@ public class SelectDateDialog extends BottomSheetDialog {
             dayData.add((i + 1) + "");
         }
 
-        Logger.i("ChooseDateDialog:setDays:>>>>>" + dayData.toString());
+
     }
 
     private boolean isLeapYear(int year) {

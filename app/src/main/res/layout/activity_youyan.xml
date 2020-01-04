@@ -5,351 +5,76 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.ruiao.tools.youyan.YouyanActivity">
-<LinearLayout
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/padding_top"
-        android:background="@color/chart_bg_1" />
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/chart_bg">
-
-        <TextView
-            android:id="@+id/tv_city"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="油烟在线"
-            android:textColor="@color/white"
-            android:textSize="18sp" />
-
-        <TextView
-            android:id="@+id/tv_change_city"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="11dp"
-            android:text=""
-            android:textColor="@color/white"
-            android:textSize="16sp" />
-    </RelativeLayout>
-    <LinearLayout
-        android:id="@+id/ll_select_dev"
-        android:layout_marginTop="5dp"
-        android:padding="10dp"
-        android:background="@color/white"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <ImageView
-            android:src="@mipmap/paifengshan"
-            android:layout_width="18dp"
-            android:layout_height="18dp" />
-        <TextView
-            android:id="@+id/tv_newDate"
-            android:layout_marginLeft="10dp"
-            android:textColor="@color/bbg"
-            android:text="点击选择 企业设备"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
 
     <LinearLayout
-        android:paddingTop="0dp"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp"
-        android:paddingBottom="2dp"
-        android:background="@color/white"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <LinearLayout
-            android:background="@drawable/default_btn_bg1"
-            android:layout_marginTop="2dp"
-            android:layout_marginLeft="2dp"
-            android:orientation="horizontal"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="20dp">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/padding_top"
+            android:background="@color/chart_bg_1" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/chart_bg">
+
             <TextView
+                android:id="@+id/tv_city"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="油烟"
                 android:textColor="@color/white"
-                android:textSize="12sp"
-                android:gravity="center"
-                android:background="@color/bbg"
-                android:text="企业"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="20dp" />
-            <TextView
-                android:id="@+id/fac_name"
-                android:textSize="12sp"
-                android:gravity="center"
-                android:text=""
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="20dp" />
-        </LinearLayout>
+                android:textSize="18sp" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <FrameLayout
+                android:id="@+id/main_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_above="@+id/ll_x" />
+
+            <LinearLayout
+                android:id="@+id/ll_x"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/main_tab_height"
+                android:layout_alignParentBottom="true"
+                android:background="@android:color/white"
+                android:orientation="vertical">
+
+                <View
+                    android:id="@+id/view"
+                    style="@style/divider_line" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/main_tab_height"
+                    android:orientation="horizontal">
+
+                    <include
+                        android:id="@+id/main_tab1"
+                        layout="@layout/item_main_tab" />
+
+                    <include
+                        android:id="@+id/main_tab2"
+                        layout="@layout/item_main_tab" />
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </RelativeLayout>
 
     </LinearLayout>
-    <LinearLayout
-        android:paddingTop="0dp"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp"
-        android:paddingBottom="2dp"
-        android:background="@color/white"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <LinearLayout
-            android:background="@drawable/default_btn_bg1"
-            android:layout_marginTop="2dp"
-            android:layout_marginLeft="2dp"
-            android:orientation="horizontal"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="20dp">
-            <TextView
-                android:textColor="@color/white"
-                android:textSize="12sp"
-                android:gravity="center"
-                android:background="@color/bbg"
-                android:text="设备名称"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="20dp" />
-            <TextView
-                android:id="@+id/dev_name"
-                android:textSize="12sp"
-                android:gravity="center"
-                android:text=""
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="20dp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:background="@drawable/default_btn_bg1"
-            android:layout_marginTop="2dp"
-            android:layout_marginLeft="2dp"
-            android:orientation="horizontal"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="20dp">
-            <TextView
-                android:id="@+id/arr1"
-                android:textColor="@color/white"
-                android:textSize="12sp"
-                android:gravity="center"
-                android:background="@color/bbg"
-                android:text="采集时间"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="20dp" />
-            <TextView
-                android:id="@+id/arrcontext1"
-                android:textSize="12sp"
-                android:gravity="center"
-                android:text=""
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="20dp" />
-        </LinearLayout>
-    </LinearLayout>
-    <LinearLayout
-        android:paddingTop="0dp"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp"
-        android:paddingBottom="2dp"
-        android:background="@color/white"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <LinearLayout
-            android:background="@drawable/default_btn_bg1"
-            android:layout_marginTop="2dp"
-            android:layout_marginLeft="2dp"
-            android:orientation="horizontal"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="20dp">
-            <TextView
-                android:id="@+id/arr2"
-                android:textColor="@color/white"
-                android:textSize="12sp"
-                android:gravity="center"
-                android:background="@color/bbg"
-                android:text="油烟数值"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="20dp" />
-            <TextView
-                android:id="@+id/arr2context"
-                android:textSize="12sp"
-                android:gravity="center"
-                android:text=""
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="20dp" />
-        </LinearLayout>
-        <LinearLayout
-            android:background="@drawable/default_btn_bg1"
-            android:layout_marginTop="2dp"
-            android:layout_marginLeft="2dp"
-            android:orientation="horizontal"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="20dp">
-            <TextView
-                android:id="@+id/arr3"
-                android:textColor="@color/white"
-                android:textSize="12sp"
-                android:gravity="center"
-                android:background="@color/bbg"
-                android:text="温度"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="20dp" />
-            <TextView
-                android:id="@+id/arr3context"
-                android:textSize="12sp"
-                android:gravity="center"
-                android:text=""
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="20dp" />
-        </LinearLayout>
-
-    </LinearLayout>
-    <LinearLayout
-        android:paddingTop="0dp"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp"
-        android:paddingBottom="2dp"
-        android:background="@color/white"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <LinearLayout
-            android:background="@drawable/default_btn_bg1"
-            android:layout_marginTop="2dp"
-            android:layout_marginLeft="2dp"
-            android:orientation="horizontal"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="20dp">
-            <TextView
-                android:id="@+id/arr4"
-                android:textColor="@color/white"
-                android:textSize="12sp"
-                android:gravity="center"
-                android:background="@color/bbg"
-                android:text="湿度"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="20dp" />
-            <TextView
-                android:id="@+id/arr4context"
-                android:textSize="12sp"
-                android:gravity="center"
-                android:text=""
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="20dp" />
-        </LinearLayout>
-        <LinearLayout
-            android:background="@drawable/default_btn_bg1"
-            android:layout_marginTop="2dp"
-            android:layout_marginLeft="2dp"
-            android:orientation="horizontal"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="20dp">
-            <TextView
-                android:id="@+id/arr5"
-                android:textColor="@color/white"
-                android:textSize="12sp"
-                android:gravity="center"
-                android:background="@color/bbg"
-                android:text="气压"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="20dp" />
-            <TextView
-                android:id="@+id/arr5context"
-                android:textSize="12sp"
-                android:gravity="center"
-                android:text=""
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="20dp" />
-        </LinearLayout>
-
-
-    </LinearLayout>
-    <LinearLayout
-        android:paddingTop="0dp"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp"
-        android:paddingBottom="2dp"
-        android:background="@color/white"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <LinearLayout
-            android:background="@drawable/default_btn_bg1"
-            android:layout_marginTop="2dp"
-            android:layout_marginLeft="2dp"
-            android:orientation="horizontal"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="20dp">
-            <TextView
-                android:id="@+id/arr6"
-                android:textColor="@color/white"
-                android:textSize="12sp"
-                android:gravity="center"
-                android:background="@color/bbg"
-                android:text="净化器状态"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="20dp" />
-            <TextView
-                android:id="@+id/arr6context"
-                android:textSize="12sp"
-                android:gravity="center"
-                android:text=""
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="20dp" />
-        </LinearLayout>
-        <LinearLayout
-            android:background="@drawable/default_btn_bg1"
-            android:layout_marginTop="2dp"
-            android:layout_marginLeft="2dp"
-            android:orientation="horizontal"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="20dp">
-            <TextView
-                android:id="@+id/arr7"
-                android:textColor="@color/white"
-                android:textSize="12sp"
-                android:gravity="center"
-                android:background="@color/bbg"
-                android:text="净化器电流"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="20dp" />
-            <TextView
-                android:id="@+id/arr7context"
-                android:textSize="12sp"
-                android:gravity="center"
-                android:text=""
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="20dp" />
-        </LinearLayout>
-
-    </LinearLayout>
-</LinearLayout>
 </android.support.constraint.ConstraintLayout>

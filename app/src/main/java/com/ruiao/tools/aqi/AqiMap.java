@@ -9,6 +9,7 @@ import android.text.TextPaint;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.SearchView;
+import android.widget.TextView;
 
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.BitmapDescriptor;
@@ -49,6 +50,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 
+import static com.baidu.mapapi.utils.CoordinateConverter.CoordType.BD09LL;
 import static com.baidu.mapapi.utils.CoordinateConverter.CoordType.COMMON;
 
 public class AqiMap extends BaseFragment {
@@ -57,6 +59,8 @@ public class AqiMap extends BaseFragment {
     MapView bmapView;
     @BindView(R.id.ll_tongjitupian)
     LinearLayout ll_tongjitupian;
+    @BindView(R.id.tv_aqi)
+    TextView tv_aqi;
     private BaiduMap mBaiduMap;
     DistrictSearch districtSearch;
     @Override
@@ -121,7 +125,7 @@ public class AqiMap extends BaseFragment {
             }
         });
         //1定位到城市，框起来
-        districtSearch.searchDistrict(new DistrictSearchOption().cityName("石家庄").districtName("藁城区"));
+        districtSearch.searchDistrict(new DistrictSearchOption().cityName("石家庄").districtName("新乐市"));
 
         //2请求到最新数据，根据站点，列出
         initFromWeb();
@@ -130,7 +134,7 @@ public class AqiMap extends BaseFragment {
 
     private void initFromWeb() {
         RequestParams pa = new RequestParams();
-        pa.add("username", "admin");
+        pa.add("username", (String) SPUtils.get(getContext(), "username", ""));
         list.clear();
         HttpUtil.get(URLConstants.AQI, pa, new HttpUtil.SimpJsonHandle(getContext()) {
             @Override
@@ -252,18 +256,32 @@ public class AqiMap extends BaseFragment {
 
 
     protected Bitmap getMyBitmap(String pm_val) {
-        Bitmap bitmap = BitmapDescriptorFactory.fromResource(R.drawable.aqi_1).getBitmap();
+        int aqi = Integer.parseInt(pm_val);
+        tv_aqi.setText("AQI:"+aqi);
+        Bitmap bitmap;
+        if(aqi<50){
+            bitmap = BitmapDescriptorFactory.fromResource(R.drawable.gk_1_1).getBitmap();
+        }else if(aqi>=50 && aqi<100) {
+            bitmap = BitmapDescriptorFactory.fromResource(R.drawable.lixian).getBitmap();
+        }else if(aqi>=100 && aqi<200) {
+            bitmap = BitmapDescriptorFactory.fromResource(R.drawable.huaide).getBitmap();
+        }else if(aqi>=200) {
+            bitmap = BitmapDescriptorFactory.fromResource(R.drawable.tinchan).getBitmap();
+        }else {
+            bitmap = BitmapDescriptorFactory.fromResource(R.drawable.tinchan).getBitmap();
+        }
+
         bitmap = Bitmap.createBitmap(bitmap, 0 ,0, bitmap.getWidth(), bitmap.getHeight());
         Canvas canvas = new Canvas(bitmap);
         TextPaint textPaint = new TextPaint();
         textPaint.setAntiAlias(true);
         textPaint.setTextSize(22f);
         textPaint.setColor(getResources().getColor(R.color.primary_text));
-        canvas.drawText(pm_val, 5, 25 ,textPaint);// 设置bitmap上面的文字位置
+        canvas.drawText("", 5, 25 ,textPaint);// 设置bitmap上面的文字位置
         return bitmap;
     }
 
-    @OnClick({R.id.pm25, R.id.pm100,R.id.o3,R.id.so2,R.id.no2,R.id.co,R.id.rr_tongjitupian})
+    @OnClick({R.id.pm25, R.id.pm10,R.id.o3,R.id.so2,R.id.no2,R.id.co,R.id.rr_tongjitupian})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.pm25:
@@ -273,7 +291,7 @@ public class AqiMap extends BaseFragment {
                     ll_tongjitupian.setVisibility(View.VISIBLE);
                 }
                 break;
-            case R.id.pm100:
+            case R.id.pm10:
                 if (ll_tongjitupian.getVisibility() == View.VISIBLE) {
                     ll_tongjitupian.setVisibility(View.GONE);
                 } else if (ll_tongjitupian.getVisibility() == View.GONE) {
@@ -309,11 +327,11 @@ public class AqiMap extends BaseFragment {
                 }
                 break;
             case R.id.rr_tongjitupian:
-                if (ll_tongjitupian.getVisibility() == View.VISIBLE) {
-                    ll_tongjitupian.setVisibility(View.GONE);
-                } else if (ll_tongjitupian.getVisibility() == View.GONE) {
-                    ll_tongjitupian.setVisibility(View.VISIBLE);
-                }
+//                if (ll_tongjitupian.getVisibility() == View.VISIBLE) {
+//                    ll_tongjitupian.setVisibility(View.GONE);
+//                } else if (ll_tongjitupian.getVisibility() == View.GONE) {
+//                    ll_tongjitupian.setVisibility(View.VISIBLE);
+//                }
                 break;
 
         }

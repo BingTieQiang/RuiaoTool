@@ -100,26 +100,19 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                         if( "true" .endsWith( response.getString("success"))){
                             SPUtils.put(context,"login",true);  //登录已经登录
-                            SPUtils.put(context,"username","15801299706");  //保存用户名字
+                            SPUtils.put(context,"username",et_name.getText().toString().trim());  //保存用户名字
                             SPUtils.put(context,"username1",et_name.getText().toString().trim());  //保存用户名字
 
                             startActivity(new Intent(context, MainActivity.class));
                             finish();
                         }else {
                             ToastHelper.shortToast(context,response.getString("message"));
-
                             startActivity(new Intent(context, LoginActivity.class));
                             finish();
                         }
-
-
-
-
-
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
             }
         });
 
@@ -132,12 +125,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         mInputLayout = findViewById(R.id.input_layout);
         mName = (LinearLayout) findViewById(R.id.input_layout_name);
         mPsw = (LinearLayout) findViewById(R.id.input_layout_psw);
-
         mBtnLogin.setOnClickListener(this);
-
-
-
-        ArrayAdapter dev_adapter = new ArrayAdapter<String>(context,android.R.layout.simple_list_item_1,new String[]{"晋州","清河","宁晋"});
+        ArrayAdapter dev_adapter = new ArrayAdapter<String>(context,android.R.layout.simple_list_item_1,new String[]{"晋州","清河","宁晋","南宫","藁城","柏乡","新乐","海港"});
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setIcon(R.mipmap.ic_lonch);
         builder.setTitle("请选择服务器地址");
@@ -155,9 +144,25 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                   case 2:
                       SPUtils.put(context,"BASE","http://183.196.173.163:11888/");      //宁晋
                       break;
+                  case 3:
+                      SPUtils.put(context,"BASE","http://183.196.178.13:11888/");      //南宫
+                      break;
+                  case 4:
+                      SPUtils.put(context,"BASE","http://110.249.145.94:11114/");      //藁城
+                      break;
+                  case 5:
+                      SPUtils.put(context,"BASE","http://222.223.121.13:11888/");      //柏乡
+                      break;
+                  case 6:
+                      SPUtils.put(context,"BASE","http://222.222.220.218:11888/");      //新乐
+                      break;
+                  case 7:
+                      SPUtils.put(context,"BASE","http://111.61.249.50:11888/");      //海港
+                      break;
               }
             }
         });
+//        SPUtils.put(context,"BASE","http://222.222.220.218:11888/");
         builder.show();
     }
 

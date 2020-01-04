@@ -21,13 +21,9 @@ public class AqiActivity extends AppCompatActivity {
     View mTab1;
     @BindView(R.id.main_tab2)
     View mTab2;
-
     private AqiMap map;
     private AqiNewData newdata;
-
     private View[] mTabs;
-
-
     protected Fragment currentFragment;
     private int currentTabIndex;
     private final int[] mTabIcons = new int[]{R.drawable.tab_gongkuang1, R.drawable.tab_gongkuang3};
@@ -39,7 +35,6 @@ public class AqiActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         initTabs();
         StatusBarUtil.darkMode(this);
-
         map = new AqiMap();
         getSupportFragmentManager().beginTransaction().add(R.id.main_content, map).commitAllowingStateLoss();
         currentFragment = map;

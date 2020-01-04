@@ -47,4 +47,12 @@ public class EchartView extends WebView {
         String call = "javascript:loadEcharts('" + optionString + "')";
         loadUrl(call);
     }
+
+    public void loadStr(String string) {
+        if (string == null) {
+            return;
+        }
+        String call = "javascript:loadEcharts('" + string + "')";
+        loadUrl(call);
+    }
 }

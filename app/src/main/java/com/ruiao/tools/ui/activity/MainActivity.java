@@ -39,6 +39,7 @@ import com.allenliu.versionchecklib.v2.builder.UIData;
 import com.allenliu.versionchecklib.v2.callback.CustomDownloadingDialogListener;
 import com.allenliu.versionchecklib.v2.callback.CustomVersionDialogListener;
 import com.allenliu.versionchecklib.v2.callback.RequestVersionListener;
+import com.google.zxing.activity.CaptureActivity;
 import com.igexin.sdk.PushManager;
 
 import com.loopj.android.http.AsyncHttpClient;
@@ -47,6 +48,7 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.ruiao.tools.Application;
 import com.ruiao.tools.R;
+import com.ruiao.tools.menjin.MenjinResultActivity;
 import com.ruiao.tools.the.TheActivity;
 
 import com.ruiao.tools.ui.BaseDialog;
@@ -65,7 +67,6 @@ import com.ruiao.tools.utils.PackageUtils;
 import com.ruiao.tools.utils.SPUtils;
 import com.ruiao.tools.utils.StatusBarUtil;
 import com.ruiao.tools.utils.ToastHelper;
-
 import org.apache.http.Header;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -84,6 +85,7 @@ import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 
 public class MainActivity extends BaseActivity implements EasyPermissions.PermissionCallbacks{
+    public final static int REQ_CODE = 1028;
     private DownloadBuilder builder;
     protected Handler mainHandler;
     private NotificationManager mNotifyManager;
@@ -331,7 +333,7 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
     public void sendCid(Message msg) {
         String cid = (String) msg.obj;
         RequestParams pa = new RequestParams();
-        pa.put("username",SPUtils.get(context, "username1", ""));
+        pa.put("username",SPUtils.get(context, "username", ""));
         pa.put("cid", cid);
         AsynHttpTools.httpGetMethodByParams(URLConstants.CID, pa, new JsonHttpResponseHandler("GB2312"){
             @Override
@@ -402,6 +404,12 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
                     e.printStackTrace();
                 }
             }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+                throwable.printStackTrace();
+            }
         });
     }
 
@@ -459,4 +467,16 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
         };
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQ_CODE) {
+            if(resultCode==0){
+                String result = data.getStringExtra(CaptureActivity.SCAN_QRCODE_RESULT);
+                Intent intent = new Intent(this, MenjinResultActivity.class);
+                intent.putExtra("mn",result);
+                startActivity(intent);
+            }
+        }
+    }
 }

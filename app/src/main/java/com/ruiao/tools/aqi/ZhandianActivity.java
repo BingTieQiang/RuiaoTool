@@ -35,8 +35,8 @@ public class ZhandianActivity extends AppCompatActivity {
         bean = (AqiBean) bundle.getSerializable("bean");
         devName.setText(bean.name);
         devNum.setText(bean.MonitorID);
-        tvType.setText("微型站");
-        tvArea.setText("藁城");
+        tvType.setText("国标站");
+        tvArea.setText("新乐");
         tvJingdu.setText(""+bean.lat);
         tvWeidu.setText(""+bean.longt);
     }

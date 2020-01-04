@@ -2,6 +2,7 @@ package com.ruiao.tools.the;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
@@ -11,6 +12,7 @@ import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -64,6 +66,10 @@ public class LishiQuxian extends Fragment implements PageChangeLinster{
     EchartView echartview;
     @BindView(R.id.echartview2)
     EchartView echartview2;
+    @BindView(R.id.ll2)
+    LinearLayout ll2;
+    @BindView(R.id.img_histroy)
+    ImageView img;
     boolean hasFinish = false;
     private SimpleDateFormat format = new SimpleDateFormat("yyyy年MM月dd日HH:mm");
     private SimpleDateFormat formatx = new SimpleDateFormat("yyyy年MM月dd日");
@@ -82,6 +88,8 @@ public class LishiQuxian extends Fragment implements PageChangeLinster{
     TextView txtSetting;
     @BindView(R.id.ll_serch)
     LinearLayout llSerch;
+    @BindView(R.id.ll_lishi)
+    LinearLayout llLishi;
     Unbinder unbinder;
     private String start = "";
     private String end = "";
@@ -98,7 +106,12 @@ public class LishiQuxian extends Fragment implements PageChangeLinster{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.activity_dongta1, container, false);
         unbinder = ButterKnife.bind(this, view);
-
+        img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(),FengzhongHistroyActivity.class));
+            }
+        });
         adapter = new DanzhanAdapter(getContext(), beans);
         basiList.setAdapter(adapter);
         echartview.setWebViewClient(new WebViewClient(){
@@ -163,6 +176,7 @@ public class LishiQuxian extends Fragment implements PageChangeLinster{
             tvGongsiming.setText("晋州市中兴装饰用布有限公司");
         }else if(activity.id .equals("11")){
             tvGongsiming.setText("晋州市盖鑫医药中间体有限公司");
+            llLishi.setVisibility(View.VISIBLE);
         }
 
         try {
@@ -226,10 +240,10 @@ public class LishiQuxian extends Fragment implements PageChangeLinster{
                         echartview.refreshEchartsWithOption(EchartOptionUtil.getLineChartOptions(names,time_arr,data_list));  //线的名字，X坐标 ，线
 //                        adapter.notifyDataSetChanged();
                         if(response.has("list_zhili")){
-                            echartview2.setVisibility(View.VISIBLE);
+                            ll2.setVisibility(View.VISIBLE);
                             setZhiLi(response);
                         }else {
-                            echartview2.setVisibility(View.GONE);
+                            ll2.setVisibility(View.GONE);
                         }
 
                     } else {

@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+    <include layout="@layout/toolbar_layout"/>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="20dp"
+            android:orientation="vertical"
+            android:id="@+id/tasktip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </LinearLayout>
+        <RelativeLayout
+            android:id="@+id/ll_select_dev"
+
+            android:padding="10dp"
+            android:background="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/tv_pre"
+                android:textSize="13sp"
+                android:text="前一天"
+                android:textColor="@color/bbg"
+                android:layout_marginStart="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                android:id="@+id/tv_newDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="选择时间"
+                android:textColor="@color/bbg" />
+            <TextView
+                android:id="@+id/tv_after"
+                android:textSize="13sp"
+                android:text="后一天"
+                android:textColor="@color/bbg"
+                android:layout_marginRight="10dp"
+                android:layout_alignParentRight="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+        <View
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:background="#cccccc"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"/>
+        <TextView
+            android:layout_marginLeft="20dp"
+            android:text="详细"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <View
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:background="#cccccc"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"/>
+        <LinearLayout
+            android:layout_marginTop="5dp"
+            android:orientation="vertical"
+            android:layout_marginLeft="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/ll_3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:layout_marginLeft="10dp"
+                android:orientation="horizontal"
+                android:paddingTop="5dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="抓拍类型："
+                    android:textColor="@color/primary_text" />
+
+                <TextView
+                    android:id="@+id/type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="11dp"
+                    android:layout_marginLeft="11dp"
+                    android:text="手动抓拍"
+                    android:textColor="@color/primary_text" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/ll_3"
+                android:layout_marginLeft="10dp"
+                android:orientation="horizontal"
+                android:paddingTop="5dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="所属企业："
+                    android:textColor="@color/primary_text" />
+
+                <TextView
+                    android:id="@+id/qiye"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="11dp"
+                    android:layout_marginLeft="11dp"
+                    android:text="石家庄华美造纸厂"
+                    android:textColor="@color/primary_text" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ii_5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/ll_6"
+                android:layout_marginLeft="10dp"
+                android:orientation="horizontal"
+                android:paddingTop="5dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="监测站点："
+                    android:textColor="@color/primary_text" />
+
+                <TextView
+                    android:id="@+id/miaoshu"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="11dp"
+                    android:layout_marginLeft="11dp"
+                    android:text="排放口"
+                    android:textColor="@color/primary_text" />
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="20dp"
+            android:text="抓拍"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <View
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:background="#cccccc"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"/>
+       <WebView
+           android:id="@+id/web_img"
+           android:layout_marginLeft="20dp"
+           android:layout_marginRight="20dp"
+           android:layout_width="match_parent"
+           android:layout_height="300dp"></WebView>
+        <RelativeLayout
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+           <Button
+               android:id="@+id/xiangqian"
+               android:layout_marginLeft="10dp"
+               android:text="图片向前"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content" />
+            <Button
+                android:id="@+id/xianghou"
+                android:layout_marginRight="10dp"
+                android:layout_alignParentRight="true"
+                android:text="图片向后"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+    </LinearLayout>
+    </ScrollView>
+</LinearLayout>

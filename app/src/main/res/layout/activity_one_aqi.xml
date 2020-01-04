@@ -39,6 +39,7 @@
             android:layout_height="match_parent">
 
             <LinearLayout
+
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
@@ -63,6 +64,18 @@
                         android:layout_marginLeft="10dp"
                         android:text="2019/4/20 21:15:10"
                         android:textColor="@color/bbg" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/white"
+                    android:padding="5dp">
+                    <TextView
+                        android:text="注释：co单位为mg/m3 其他气体为ug/m3 气压KPa\n温度 摄氏度"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -507,16 +520,22 @@
                         android:textColor="@color/bbg" />
                 </LinearLayout>
 
-                <com.github.mikephil.charting.charts.BarChart
-                    android:id="@+id/Chart"
+                <!--<com.github.mikephil.charting.charts.BarChart-->
+                    <!--android:id="@+id/Chart"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="200dp"-->
+                    <!--android:layout_centerInParent="true"-->
+                    <!--android:layout_marginTop="5dp" />-->
+                <com.ruiao.tools.ui.ZhuziEchartView
+                    android:id="@+id/echart"
                     android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:layout_centerInParent="true"
-                    android:layout_marginTop="5dp" />
+                    android:layout_height="350dp"></com.ruiao.tools.ui.ZhuziEchartView>
                 <com.ruiao.tools.widget.KeyRadioGroupV1
+                    android:paddingBottom="10dp"
+                    android:paddingTop="5dp"
                     android:id="@+id/krg_main_1"
                     android:background="@color/white"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
                     <LinearLayout
@@ -703,7 +722,7 @@
                             android:textColor="@color/primary_text"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="小时数据" />
+                            android:text="分钟数据" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -722,7 +741,7 @@
                             android:textColor="@color/primary_text"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="日数据" />
+                            android:text="小时数据" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -745,6 +764,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:visibility="invisible"
                         android:id="@+id/ll_yue"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"

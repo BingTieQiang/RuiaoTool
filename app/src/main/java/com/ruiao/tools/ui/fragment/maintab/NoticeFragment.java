@@ -283,7 +283,6 @@ public class NoticeFragment extends BaseFragment {
 
         @Override
         public int getItemCount() {
-            Log.d("123", "" + mDataList.size());
             return mDataList.size();
 
         }

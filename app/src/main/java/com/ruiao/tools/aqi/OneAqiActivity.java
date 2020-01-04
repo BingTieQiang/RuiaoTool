@@ -1,18 +1,26 @@
 package com.ruiao.tools.aqi;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.data.BarEntry;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.loopj.android.http.RequestParams;
 import com.ruiao.tools.R;
+import com.ruiao.tools.ui.EchartView;
+import com.ruiao.tools.ui.ZhuziEchartView;
 import com.ruiao.tools.url.URLConstants;
 import com.ruiao.tools.utils.HttpUtil;
+import com.ruiao.tools.utils.SPUtils;
 import com.ruiao.tools.utils.StatusBarUtil;
 import com.ruiao.tools.utils.ToastHelper;
 import com.ruiao.tools.widget.KeyRadioGroupV1;
@@ -22,7 +30,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -31,9 +43,14 @@ import butterknife.OnClick;
 import static com.baidu.mapapi.BMapManager.getContext;
 
 public class OneAqiActivity extends AppCompatActivity {
+    DateFormat bf = new SimpleDateFormat("yyyy年MM月dd日HH时mm分");
+    DateFormat bf1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    DateFormat bf2 = new SimpleDateFormat("dd日HH时");
     private AqiBean bean;
     @BindView(R.id.krg_main_1)
     KeyRadioGroupV1 group;
+    @BindView(R.id.echart)
+    ZhuziEchartView echartView;
     @BindView(R.id.tv_city)
     TextView tvCity;                //地区
     @BindView(R.id.tv_time)
@@ -62,11 +79,11 @@ public class OneAqiActivity extends AppCompatActivity {
     TextView arrPress;
     @BindView(R.id.arr_temp)
     TextView arrTemp;
-    @BindView(R.id.Chart)
-    BarChart Chart;
+    //    @BindView(R.id.Chart)
+//    BarChart Chart;
     BarChartManager manager;
 
-    ArrayList<ArrayList<BarEntry>> lists = new ArrayList<>();
+    protected ArrayList<ArrayList<AqiBeanlittle>> lists = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,49 +98,83 @@ public class OneAqiActivity extends AppCompatActivity {
             public void onCheckedChanged(KeyRadioGroupV1 group, int checkedId) {
                 switch (checkedId) {
                     case R.id.btn_aqi:
-                        manager.setData(lists.get(0));
+
+                        setData(lists.get(0));
                         break;
                     case R.id.btn_pm10:
-                        manager.setData(lists.get(1));
+                        setData(lists.get(1));
                         break;
                     case R.id.btn_pm25:
-                        manager.setData(lists.get(2));
+                        setData(lists.get(2));
                         break;
                     case R.id.btn_co:
-                        manager.setData(lists.get(3));
+                        setData(lists.get(3));
                         break;
                     case R.id.btn_fengsu:
-                        manager.setData(lists.get(4));
+                        setData(lists.get(4));
                         break;
                     case R.id.btn_no2:
-                        manager.setData(lists.get(5));
+                        setData(lists.get(5));
                         break;
                     case R.id.btn_so2:
-                        manager.setData(lists.get(6));
+                        setData(lists.get(6));
                         break;
 
                     case R.id.btn_o3:
-                        manager.setData(lists.get(7));
+                        setData(lists.get(7));
                         break;
                     case R.id.btn_press:
-                        manager.setData(lists.get(8));
+                        setData(lists.get(8));
                         break;
                     case R.id.btn_temp:
-                        manager.setData(lists.get(9));
+                        setData(lists.get(9));
                         break;
                     case R.id.btn_shiidu:
-                        manager.setData(lists.get(10));
+                        setData(lists.get(10));
                         break;
                 }
             }
         });
-        manager = new BarChartManager(Chart);
-        manager.initLineChart("十二小时数据");
+//        manager = new BarChartManager(Chart);
+//        manager.initLineChart("十二小时数据");
         initNowData();
-        initData();
+        echartView.setWebViewClient(new WebViewClient(){
+            @Override
+            public void onPageFinished(WebView view, String url)
+            {
+                super.onPageFinished(view, url);
+                initData();
+            }
+            @Override
+            public void onPageStarted(WebView view, String url, Bitmap favicon)
+            {
+
+                super.onPageStarted(view, url, favicon);
+
+            }
+
+        });
+
+    }
+
+    private void setData(ArrayList<AqiBeanlittle> list) {
+        JSONArray data = new JSONArray();
+        try {
+            for (int i = 0; i < list.size(); i++) {
+                AqiBeanlittle ber = list.get(i);
+                data.put(i, ber.value);
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        echartView.loadStr(data.toString());
+
     }
 
     private void initNowData() {
+        tvTime.setText(bf.format(new Date()));
         arrAqi.setText(bean.aqi);
         arrPm10.setText(bean.pm10);
         arrPm25.setText(bean.pm25);
@@ -141,7 +192,7 @@ public class OneAqiActivity extends AppCompatActivity {
 
     private void initData() {
         RequestParams pa = new RequestParams();
-        pa.add("username", "admin");
+        pa.add("username", (String) SPUtils.get(this, "username", ""));
         pa.add("MonitorID", bean.MonitorID);
         HttpUtil.get(URLConstants.AQI1, pa, new HttpUtil.SimpJsonHandle(getContext()) {
             @Override
@@ -172,78 +223,87 @@ public class OneAqiActivity extends AppCompatActivity {
                         JSONArray arr_press = response.getJSONArray("press");
                         JSONArray arr_temp = response.getJSONArray("temp");
                         JSONArray arr_shidu = response.getJSONArray("shidu");
+                        JSONArray time  = response.getJSONArray("time");
 
-                        ArrayList<BarEntry> aqilist = new ArrayList<>();
+                        for (int i = 0;i<time.length();i++){
+                            String str = time.getString(i);
+                            String x =  bf2.format( bf1.parse(str) );
+                            time.put(i,x);
+                        }
+                        echartView.setDatex(time.toString());
+
+                        ArrayList<AqiBeanlittle> aqilist = new ArrayList<>();
                         for (int i = 0; i < arr_aqi.length(); i++) {
-                            aqilist.add(new BarEntry(i, (float) arr_aqi.getDouble(i)));
+//                            aqilist.add(new BarEntry(i, 0.0f));
+                            aqilist.add(new AqiBeanlittle(arr_aqi.getString(i)));
                         }
                         lists.add(aqilist);
 
-                        ArrayList<BarEntry> pm10list = new ArrayList<>();
+                        ArrayList<AqiBeanlittle> pm10list = new ArrayList<>();
                         for (int i = 0; i < arr_pm10.length(); i++) {
-                            pm10list.add(new BarEntry(i, (float) arr_pm10.getDouble(i)));
+                            pm10list.add(new AqiBeanlittle(arr_pm10.getString(i)));
                         }
                         lists.add(pm10list);
 
-                        ArrayList<BarEntry> pm25list = new ArrayList<>();
+                        ArrayList<AqiBeanlittle> pm25list = new ArrayList<>();
                         for (int i = 0; i < arr_pm25.length(); i++) {
-                            pm25list.add(new BarEntry(i, (float) arr_pm10.getDouble(i)));
+                            pm25list.add(new AqiBeanlittle(arr_pm25.getString(i)));
                         }
                         lists.add(pm25list);
 
-                        ArrayList<BarEntry> colist = new ArrayList<>();
+                        ArrayList<AqiBeanlittle> colist = new ArrayList<>();
                         for (int i = 0; i < arr_co.length(); i++) {
-                            colist.add(new BarEntry(i, (float) arr_co.getDouble(i)));
+                            colist.add(new AqiBeanlittle(arr_co.getString(i)));
                         }
                         lists.add(colist);
 
-                        ArrayList<BarEntry> fengsulist = new ArrayList<>();
+                        ArrayList<AqiBeanlittle> fengsulist = new ArrayList<>();
                         for (int i = 0; i < arr_fengsu.length(); i++) {
-                            fengsulist.add(new BarEntry(i, (float) arr_fengsu.getDouble(i)));
+                            fengsulist.add(new AqiBeanlittle(arr_fengsu.getString(i)));
                         }
                         lists.add(fengsulist);
 
-                        ArrayList<BarEntry> no2list = new ArrayList<>();
+                        ArrayList<AqiBeanlittle> no2list = new ArrayList<>();
                         for (int i = 0; i < arr_no2.length(); i++) {
-                            no2list.add(new BarEntry(i, (float) arr_no2.getDouble(i)));
+                            no2list.add(new AqiBeanlittle(arr_no2.getString(i)));
                         }
                         lists.add(no2list);
 
-                        ArrayList<BarEntry> so2list = new ArrayList<>();
+                        ArrayList<AqiBeanlittle> so2list = new ArrayList<>();
                         for (int i = 0; i < arr_so2.length(); i++) {
-                            so2list.add(new BarEntry(i, (float) arr_so2.getDouble(i)));
+                            so2list.add(new AqiBeanlittle(arr_so2.getString(i)));
                         }
                         lists.add(so2list);
 
-                        ArrayList<BarEntry> o3list = new ArrayList<>();
+                        ArrayList<AqiBeanlittle> o3list = new ArrayList<>();
                         for (int i = 0; i < arr_o3.length(); i++) {
-                            o3list.add(new BarEntry(i, (float) arr_o3.getDouble(i)));
+                            o3list.add(new AqiBeanlittle(arr_o3.getString(i)));
                         }
                         lists.add(o3list);
 
-                        ArrayList<BarEntry> presslist = new ArrayList<>();
+                        ArrayList<AqiBeanlittle> presslist = new ArrayList<>();
                         for (int i = 0; i < arr_press.length(); i++) {
-                            presslist.add(new BarEntry(i, (float) arr_press.getDouble(i)));
+                            presslist.add(new AqiBeanlittle(arr_press.getString(i)));
                         }
                         lists.add(presslist);
 
-                        ArrayList<BarEntry> templist = new ArrayList<>();
+                        ArrayList<AqiBeanlittle> templist = new ArrayList<>();
                         for (int i = 0; i < arr_temp.length(); i++) {
-                            templist.add(new BarEntry(i, (float) arr_temp.getDouble(i)));
+                            templist.add(new AqiBeanlittle(arr_temp.getString(i)));
                         }
                         lists.add(templist);
 
-                        ArrayList<BarEntry> shidulist = new ArrayList<>();
+                        ArrayList<AqiBeanlittle> shidulist = new ArrayList<>();
                         for (int i = 0; i < arr_shidu.length(); i++) {
-                            shidulist.add(new BarEntry(i, (float) arr_shidu.getDouble(i)));
+                            shidulist.add(new AqiBeanlittle(arr_shidu.getString(i)));
                         }
                         lists.add(shidulist);
 
-                        manager.setData(lists.get(0));
+                        setData(lists.get(0));
                     } else {
                         ToastHelper.shortToast(getContext(), response.getString("message"));
                     }
-                } catch (JSONException e) {
+                } catch (JSONException | ParseException e) {
                     e.printStackTrace();
                 }
 
@@ -253,31 +313,41 @@ public class OneAqiActivity extends AppCompatActivity {
 
     @OnClick({R.id.ll_zhandian, R.id.ll_24, R.id.ll_tian, R.id.ll_zhou, R.id.ll_yue})
     public void onViewClicked(View view) {
-        Intent intent = new Intent(getContext(),AqiHistroyActivity.class);
+//        Intent intent = new Intent(getContext(),AqiHistroyActivity.class);
         switch (view.getId()) {
             case R.id.ll_zhandian:
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("bean",bean);
-                intent = new Intent(getContext(),ZhandianActivity.class);
-                intent.putExtra("bundle",bundle);
+                bundle.putSerializable("bean", bean);
+                Intent intent = new Intent(getContext(), ZhandianActivity.class);
+                intent.putExtra("bundle", bundle);
+                startActivity(intent);
                 break;
-            case R.id.ll_24:
-                intent.putExtra("time","24");
+            case R.id.ll_24:       //小时 中的分钟
+                Intent intent24 = new Intent(getContext(), AqiFenActivity.class);
                 Bundle bundlex = new Bundle();
-                bundlex.putSerializable("bean",bean);
-                intent.putExtra("bundle",bundlex);
+                bundlex.putSerializable("bean", bean);
+                intent24.putExtra("bundle", bundlex);
+                startActivity(intent24);
                 break;
-            case R.id.ll_tian:
-                intent.putExtra("time","24");
+            case R.id.ll_tian:        //每天的 小时数据
+                Intent intenttian = new Intent(getContext(), AqiTianActivity.class);
+                Bundle bundle1 = new Bundle();
+                bundle1.putSerializable("bean", bean);
+                intenttian.putExtra("bundle", bundle1);
+                startActivity(intenttian);
                 break;
-            case R.id.ll_zhou:
-                intent.putExtra("time","24");
+            case R.id.ll_zhou:         // 每周 天数据
+                Intent intenzhou = new Intent(getContext(), AqiZhouActivity.class);
+                Bundle bundle2 = new Bundle();
+                bundle2.putSerializable("bean", bean);
+                intenzhou.putExtra("bundle", bundle2);
+                startActivity(intenzhou);
                 break;
             case R.id.ll_yue:
-                intent.putExtra("time","24");
+//                intent.putExtra("time","24");
                 break;
 
         }
-        startActivity(intent);
+
     }
 }

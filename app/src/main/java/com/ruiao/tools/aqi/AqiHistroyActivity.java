@@ -10,6 +10,7 @@ import com.loopj.android.http.RequestParams;
 import com.ruiao.tools.R;
 import com.ruiao.tools.url.URLConstants;
 import com.ruiao.tools.utils.HttpUtil;
+import com.ruiao.tools.utils.SPUtils;
 import com.ruiao.tools.utils.StatusBarUtil;
 import com.ruiao.tools.utils.ToastHelper;
 import com.ruiao.tools.widget.KeyRadioGroupV1;
@@ -96,7 +97,7 @@ public class AqiHistroyActivity extends AppCompatActivity {
 
     private void initData() {
         RequestParams pa = new RequestParams();
-        pa.add("username", "admin");
+        pa.add("username", (String) SPUtils.get(this, "username", ""));
         pa.add("MonitorID", bean.MonitorID);
         HttpUtil.get(URLConstants.AQI1, pa, new HttpUtil.SimpJsonHandle(getContext()) {
             @Override

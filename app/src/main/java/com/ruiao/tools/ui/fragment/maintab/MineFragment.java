@@ -89,14 +89,26 @@ public class MineFragment extends BaseFragment implements EasyPermissions.Permis
 
     @Override
     protected void initViewsAndEvents(View rootView, Bundle savedInstanceState) {
-        tvNickname.setText((String) SPUtils.get(mContext, "username", "")); //保存用户名字);
+        tvNickname.setText((String) SPUtils.get(mContext, "username1", "")); //保存用户名字);
         String base = (String)SPUtils.get(getContext(),"BASE","");
-        if(base.startsWith("http://222.222.220.218")){
-            address.setText("晋州");
+        if(base.startsWith("http://222.222.220.218:11888/")){
+            address.setText("新乐");
         }else if(base.startsWith("http://222.223.112.252")){
             address.setText("清河");
-        }else if(base.startsWith("http://110.249.145.94")){
+        }else if(base.startsWith("http://183.196.173.163")){
             address.setText("宁晋");
+        }else if(base.startsWith("http://110.249.145.94")){
+            address.setText("藁城");
+        }else if(base.startsWith("http://222.223.121.13")){
+            address.setText("柏乡");
+        }else if(base.startsWith("http://183.196.178.13")){
+            address.setText("南宫");
+        }else if(base.startsWith("http://222.222.220.218")){
+            address.setText("晋州");
+        }else if(base.startsWith("http://111.61.249.50")){
+            address.setText("海港");
+        }else if(base.startsWith("http://88.61.249.50")){
+            address.setText("沧州开发区");
         }
 
     }
@@ -123,7 +135,7 @@ public class MineFragment extends BaseFragment implements EasyPermissions.Permis
                 activity.speek();
                 break;
             case R.id.rr_newversion:
-                sendRequest();
+                checkVersion();
                 break;
             case R.id.rr_about:  //关于软件
                 startActivity(new Intent(mContext, AboutActivity.class));
@@ -134,7 +146,8 @@ public class MineFragment extends BaseFragment implements EasyPermissions.Permis
             case R.id.rr_logout:
                 SPUtils.put(mContext, "login", false);  //登出
                 ToastHelper.shortToast(mContext, "退出登录");
-                startActivity(new Intent(mContext, LoginActivity.class));
+//                startActivity(new Intent(mContext, LoginActivity.class));
+
                 getActivity().finish();
                 break;
         }
@@ -240,6 +253,8 @@ public class MineFragment extends BaseFragment implements EasyPermissions.Permis
                     int version = response.getInt("version");
                     if(getVersionCode(getContext())<version){
                         sendRequest();
+                    }else {
+                        ToastHelper.shortToast(getContext(),"已是最新版本");
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

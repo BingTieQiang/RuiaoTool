@@ -23,11 +23,13 @@ public class WordReportAdapter extends BaseAdapter {
     }
 
     private Context context;
-    private String[] item_Text = {"VOC", "空气站","污染源","工地扬尘","水质自动站","厂区检测","油烟在线","设备监控","IC卡总量站","工况"};
+//    private String[] item_Text = {"VOC", "空气站","污染源","工地扬尘","水质自动站","厂区检测","油烟在线","氮氧化物","IC卡总量站","工况","门禁"};
+    private String[] item_Text = {"VOC", "空气站","污染源","工地扬尘","水质自动站","厂区检测","油烟在线","氮氧化物","IC卡总量站","工况","门禁","动态管控","分表计电"};
     private int[] item_img = {R.mipmap.vocs, R.mipmap.kongqizhan,R.mipmap.wuranyuan,
                                 R.mipmap.yangchen, R.mipmap.shuizhi,R.mipmap.changqu,
                                     R.mipmap.jiankong,R.mipmap.famen,
-                                     R.mipmap.shuaka,R.drawable.gongkuanglishi,R.mipmap.gongkuang,
+                                     R.mipmap.shuaka,R.drawable.gongkuanglishi,R.drawable.menjin,R.drawable.dongtaiguankong,
+                                        R.mipmap.dianbiao
 
     };
     @Override
@@ -71,5 +73,5 @@ public class WordReportAdapter extends BaseAdapter {
             ButterKnife.bind(this, view);
         }
     }
-
+//http://110.249.145.94:11114/dtgk/doorsta.asp?username=151&MonitorName=%E6%8E%92%E6%94%BE%E5%8F%A3
 }

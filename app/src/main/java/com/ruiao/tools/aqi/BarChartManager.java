@@ -17,6 +17,7 @@ import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +27,9 @@ public class BarChartManager {
     private YAxis rightAxis;
     private XAxis xAxis;
     private String laber;
+    ArrayList<String> times;
+    SimpleDateFormat format = new SimpleDateFormat("hh");
+    SimpleDateFormat format_n = new SimpleDateFormat("yyyy MM月dd日hh:mm");  //
     //构造
     public BarChartManager(BarChart barChart) {
         this.mBarChart = barChart;
@@ -34,6 +38,10 @@ public class BarChartManager {
         xAxis = mBarChart.getXAxis();
     }
 
+    public void  setTime(ArrayList<String> times){
+        this.times = times;
+
+    }
     //初始化
     public void initLineChart(String laber) {
         this.laber = laber;
@@ -55,7 +63,7 @@ public class BarChartManager {
         legend.setTextSize(20f);  //图例文字的大小
         legend.setTextColor(Color.BLUE); //设置图例文字颜色
         //显示位置
-        legend.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP); //图例说明文字在图表的上方
+        legend.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM); //图例说明文字在图表的上方
         legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER); //图例左居中
         legend.setOrientation(Legend.LegendOrientation.HORIZONTAL);//图例的方向为水平
         legend.setDrawInside(false);//绘制在chart的外侧
@@ -70,15 +78,15 @@ public class BarChartManager {
             @Override
             public String getFormattedValue(float value, AxisBase axis) {
 
-                return "时"+value;
+                return "";
             }
         });
         //y轴设置
         leftAxis.setAxisMinimum(0f); //保证Y轴从0开始，不然会上移一点
         rightAxis.setAxisMinimum(0f);
         //将条目放大 可滑动
-        mBarChart.invalidate();
 
+        mBarChart.invalidate();
         Matrix mMatrix = new Matrix();
         mMatrix.postScale(1f, 1f);  //X轴宽度放大2倍  竖直方向不变
 

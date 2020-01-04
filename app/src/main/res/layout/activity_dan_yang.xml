@@ -1,0 +1,531 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".aqi.OneAqiActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/padding_top"
+            android:background="@color/chart_bg_1" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/chart_bg">
+
+            <TextView
+                android:id="@+id/tv_city"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="氮氧化物"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
+        </RelativeLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/ll_select_dev"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/white"
+                    android:padding="5dp">
+
+                    <ImageView
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:src="@mipmap/paifengshan" />
+
+                    <TextView
+                        android:id="@+id/tv_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:text="2019/4/20 21:15:10"
+                        android:textColor="@color/bbg" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:orientation="horizontal"
+                    android:paddingLeft="5dp"
+                    android:paddingTop="0dp"
+                    android:paddingRight="5dp"
+                    android:paddingBottom="2dp">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="25dp"
+                        android:layout_marginLeft="2dp"
+                        android:layout_marginTop="2dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/default_btn_bg1"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="25dp"
+                            android:layout_weight="1"
+                            android:background="@color/bbg"
+                            android:gravity="center"
+                            android:text="氧气含量(%)"
+                            android:textColor="@color/white"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:id="@+id/arr_yangqi"
+                            android:layout_width="0dp"
+                            android:layout_height="25dp"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text=""
+                            android:textSize="12sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="25dp"
+                        android:layout_marginLeft="2dp"
+                        android:layout_marginTop="2dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/default_btn_bg1"
+                        android:orientation="horizontal">
+
+                        <TextView
+
+                            android:layout_width="0dp"
+                            android:layout_height="25dp"
+                            android:layout_weight="1"
+                            android:background="@color/bbg"
+                            android:gravity="center"
+                            android:text="氮氧化物"
+                            android:textColor="@color/white"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:id="@+id/arr_danyanghuawu"
+                            android:layout_width="0dp"
+                            android:layout_height="25dp"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text=""
+                            android:textSize="12sp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:orientation="horizontal"
+                    android:paddingLeft="5dp"
+                    android:paddingTop="0dp"
+                    android:paddingRight="5dp"
+                    android:paddingBottom="2dp">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="25dp"
+                        android:layout_marginLeft="2dp"
+                        android:layout_marginTop="2dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/default_btn_bg1"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="25dp"
+                            android:layout_weight="1"
+                            android:background="@color/bbg"
+                            android:gravity="center"
+                            android:text="折算氮氧化物"
+                            android:textColor="@color/white"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:id="@+id/arr_zhesuandanyanghuawu"
+                            android:layout_width="0dp"
+                            android:layout_height="25dp"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text=""
+                            android:textSize="12sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="25dp"
+                        android:layout_marginLeft="2dp"
+                        android:layout_marginTop="2dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/default_btn_bg1"
+                        android:orientation="horizontal">
+
+                        <TextView
+
+                            android:layout_width="0dp"
+                            android:layout_height="25dp"
+                            android:layout_weight="1"
+                            android:background="@color/bbg"
+                            android:gravity="center"
+                            android:text="二氧化氮"
+                            android:textColor="@color/white"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:id="@+id/arr_eryanghuadan"
+                            android:layout_width="0dp"
+                            android:layout_height="25dp"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text=""
+                            android:textSize="12sp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:orientation="horizontal"
+                    android:paddingLeft="5dp"
+                    android:paddingTop="0dp"
+                    android:paddingRight="5dp"
+                    android:paddingBottom="2dp">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="25dp"
+                        android:layout_marginLeft="2dp"
+                        android:layout_marginTop="2dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/default_btn_bg1"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="25dp"
+                            android:layout_weight="1"
+                            android:background="@color/bbg"
+                            android:gravity="center"
+                            android:text="一氧化氮"
+                            android:textColor="@color/white"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:id="@+id/arr_yiyanghuadan"
+                            android:layout_width="0dp"
+                            android:layout_height="25dp"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text=""
+                            android:textSize="12sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:visibility="invisible"
+                        android:layout_width="0dp"
+                        android:layout_height="25dp"
+                        android:layout_marginLeft="2dp"
+                        android:layout_marginTop="2dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/default_btn_bg1"
+                        android:orientation="horizontal">
+
+                        <TextView
+
+                            android:layout_width="0dp"
+                            android:layout_height="25dp"
+                            android:layout_weight="1"
+                            android:background="@color/bbg"
+                            android:gravity="center"
+                            android:text="二氧化硫"
+                            android:textColor="@color/white"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="25dp"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text=""
+                            android:textSize="12sp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:paddingLeft="15dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <TextView
+                        android:textSize="12sp"
+                        android:text="注：氮氧化物|折算氮氧化物|二氧化氮|一氧化氮 单位mg/m3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
+
+
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/white"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp">
+
+                    <ImageView
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:src="@mipmap/imgic" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:text="最近12小时数据"
+                        android:textColor="@color/bbg" />
+                </LinearLayout>
+
+                <com.github.mikephil.charting.charts.BarChart
+                    android:id="@+id/Chart"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_centerInParent="true"
+                    android:layout_marginTop="5dp" />
+                <com.ruiao.tools.widget.KeyRadioGroupV1
+                    android:paddingBottom="10dp"
+                    android:paddingTop="5dp"
+                    android:id="@+id/krg_main_1"
+                    android:background="@color/white"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <LinearLayout
+
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <RadioButton
+                            android:checked="true"
+                            android:id="@+id/btn_danyanghuawu"
+                            android:layout_marginLeft="10dp"
+                            android:text="氮氧化物"
+                            android:button="@null"
+                            android:drawableLeft="@drawable/selector_radio"
+                            android:drawablePadding="5dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                        <RadioButton
+                            android:id="@+id/btn_yangqihanliang"
+                            android:layout_marginLeft="2dp"
+                            android:text="氧气含量"
+
+                            android:button="@null"
+                            android:drawableLeft="@drawable/selector_radio"
+                            android:drawablePadding="5dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                        <RadioButton
+                            android:id="@+id/btn_zhesuan"
+                            android:text="折算氮氧化物"
+                            android:layout_marginLeft="2dp"
+                            android:button="@null"
+                            android:drawableLeft="@drawable/selector_radio"
+                            android:drawablePadding="5dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_marginTop="5dp"
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <RadioButton
+                            android:id="@+id/btn_no2"
+                            android:layout_marginLeft="10dp"
+                            android:text="二氧化氮"
+                            android:button="@null"
+                            android:drawableLeft="@drawable/selector_radio"
+                            android:drawablePadding="5dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                        <RadioButton
+                            android:id="@+id/btn_no1"
+                            android:layout_marginLeft="2dp"
+                            android:text="一氧化氮"
+
+                            android:button="@null"
+                            android:drawableLeft="@drawable/selector_radio"
+                            android:drawablePadding="5dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                    </LinearLayout>
+
+                </com.ruiao.tools.widget.KeyRadioGroupV1>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/white"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="5dp">
+
+                    <ImageView
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:src="@mipmap/img121" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:text="历史数据"
+                        android:textColor="@color/bbg" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:layout_marginBottom="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/white"
+                    android:orientation="horizontal"
+                    android:paddingLeft="10dp">
+
+
+
+                    <LinearLayout
+                        android:id="@+id/ll_24"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:src="@drawable/img_24xiaoshi" />
+
+                        <TextView
+                            android:textColor="@color/primary_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="小时数据" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_tian"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:src="@drawable/img_tian" />
+
+                        <TextView
+                            android:textColor="@color/primary_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="日数据" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:visibility="invisible"
+                        android:id="@+id/ll_zhou"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:src="@drawable/img_zhou" />
+
+                        <TextView
+                            android:textColor="@color/primary_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="周数据" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:visibility="invisible"
+                        android:id="@+id/ll_yue"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:src="@drawable/img_yue" />
+
+                        <TextView
+                            android:textColor="@color/primary_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="月数据" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:visibility="invisible"
+                        android:id="@+id/ll_zhandian"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:src="@drawable/img_zhandain" />
+
+                        <TextView
+                            android:textColor="@color/primary_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="站点信息" />
+                    </LinearLayout>
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </ScrollView>
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>

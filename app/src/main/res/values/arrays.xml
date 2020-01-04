@@ -20,7 +20,22 @@
         <item>地图</item>
         <item>实时数据</item>
         <item>历史</item>
-
+    </string-array>
+    <string-array name="gongdi">
+        <item>地图</item>
+        <item>实时数据</item>
+        <item>历史</item>
+        <item>报警记录</item>
+    </string-array>
+    <string-array name="dongtai">
+        <item>地图</item>
+        <item>数据</item>
+        <item>监控</item>
+        <item>报警记录</item>
+    </string-array>
+    <string-array name="youyan">
+        <item>地图</item>
+        <item>实时数据</item>
 
     </string-array>
 
@@ -46,6 +61,13 @@
         <item>所有组别</item>
         <item>分组一</item>
         <item>分组二</item>
+    </string-array>
+    <string-array name="letter">
+        <item>吸收塔</item>
+        <item>樟脑磺酸车间一</item>
+        <item>樟脑磺酸车间二</item>
+        <item>樟脑磺酸车间三</item>
+
     </string-array>
 
 </resources>

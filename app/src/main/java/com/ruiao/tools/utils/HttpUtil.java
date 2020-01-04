@@ -21,17 +21,20 @@ public class HttpUtil {
 //    private static final String BASE_URL = "http://192.168.1.101:8890/type/jason/action/";
     //建立静态的AsyncHttpClient
     public static AsyncHttpClient client = new AsyncHttpClient();
+    static {
+        client.setEnableRedirects(true, true, true);
+    }
     //AsyncHttpClient中有get和post方法，需要用到public方法来修饰，以便调用
     public  static void get(String url, RequestParams params, AsyncHttpResponseHandler responseHandler){
         Log.d("HTTP_GET",url+"?"+params.toString());
         client.get(url, params, responseHandler);
     }
 
-
     public static void httppost(String url,RequestParams params, AsyncHttpResponseHandler responseHandler){
         Log.d("HTTP_POST",url);
         client.setTimeout(100000);
         client.post(url,params,responseHandler);
+
     }
     //单独写一个方法添加URL
 //    private static String getAbsoluteUrl(String url) {

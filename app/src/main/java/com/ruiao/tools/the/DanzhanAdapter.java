@@ -16,7 +16,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 /**
- * Created by ruiao on 2018/9/25.
+ * Created by ruiao on 2018/9/25./
  */
 
 public class DanzhanAdapter extends BaseAdapter {

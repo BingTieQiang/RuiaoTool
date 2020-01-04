@@ -38,7 +38,17 @@
                 android:text="AQI" />
 
         </RelativeLayout>
+        <TextView
+            android:id="@+id/tv_aqi"
+            android:background="#ffffff"
+            android:layout_marginLeft="15dp"
+            android:layout_below="@+id/rr_tongjitupian"
+            android:text="AQI"
+            android:textSize="16sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
         <LinearLayout
+            android:visibility="gone"
             android:id="@+id/ll_tongjitupian"
             android:layout_marginLeft="15dp"
             android:layout_below="@id/rr_tongjitupian"
@@ -46,24 +56,24 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
             <TextView
+                android:id="@+id/AQI"
+                android:layout_marginTop="3dp"
+                android:background="@color/word_bg1"
+                android:text="AQI"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/pm10"
+                android:layout_marginTop="3dp"
+                android:background="@color/word_bg1"
+                android:text="PM10"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content" />
+            <TextView
                 android:id="@+id/pm25"
                 android:layout_marginTop="3dp"
                 android:background="@color/word_bg1"
                 android:text="PM2.5"
-                android:layout_width="60dp"
-                android:layout_height="wrap_content" />
-            <TextView
-                android:id="@+id/pm100"
-                android:layout_marginTop="3dp"
-                android:background="@color/word_bg1"
-                android:text="PM100"
-                android:layout_width="60dp"
-                android:layout_height="wrap_content" />
-            <TextView
-                android:id="@+id/o3"
-                android:layout_marginTop="3dp"
-                android:background="@color/word_bg1"
-                android:text="臭氧"
                 android:layout_width="60dp"
                 android:layout_height="wrap_content" />
             <TextView
@@ -86,6 +96,49 @@
                 android:layout_marginTop="3dp"
                 android:background="@color/word_bg1"
                 android:text="一氧化碳"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/o3"
+                android:layout_marginTop="3dp"
+                android:background="@color/word_bg1"
+                android:text="臭氧"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/fengsu"
+                android:layout_marginTop="3dp"
+                android:background="@color/word_bg1"
+                android:text="风速"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/fengxiang"
+                android:layout_marginTop="3dp"
+                android:background="@color/word_bg1"
+                android:text="风向"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/press"
+                android:layout_marginTop="3dp"
+                android:background="@color/word_bg1"
+                android:text="气压"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/temp"
+                android:layout_marginTop="3dp"
+                android:background="@color/word_bg1"
+                android:text="气温"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/shidu"
+                android:layout_marginTop="3dp"
+                android:background="@color/word_bg1"
+                android:text="湿度"
                 android:layout_width="60dp"
                 android:layout_height="wrap_content" />
 

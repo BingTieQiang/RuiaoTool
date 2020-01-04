@@ -17,7 +17,6 @@
     <uses-permission android:name="android.permission.PERMISSION_GRANTED" /> <!-- Required -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" /> <!-- 连接网络权限，用于执行云端语音能力 -->
-    <uses-permission android:name="android.permission.INTERNET" /> <!-- 获取手机录音机使用权限，听写、识别、语义理解需要用到此权限 -->
     <uses-permission android:name="android.permission.RECORD_AUDIO" /> <!-- 读取网络信息状态 -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- 获取当前wifi状态 -->
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> <!-- 允许程序改变网络连接状态 -->
@@ -25,6 +24,8 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" /> <!-- 读取联系人权限，上传联系人需要用到此权限 -->
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
 
     <application
         android:name=".Application"
@@ -34,11 +35,27 @@
         android:supportsRtl="true"
         android:theme="@style/AppDefaultTheme"
         tools:replace="icon,theme,label">
-        <activity android:name=".aqi.AqiHistroyActivity"></activity>
+        <activity android:name=".dongtaiguankong.DongtaiActivity"></activity>
+        <activity android:name=".gongdiyangceng.GongdiBaojingActivity" />
+        <activity android:name=".gongdiyangceng.GongdiYangchengActivity" />
+        <activity android:name=".youyan.HistroyShiActivity" />
+        <activity android:name=".youyan.HistroyDayActivity" />
+        <activity android:name=".youyan.HistoryShifenActivity" />
+        <activity android:name=".menjin.MenjinResultActivity" />
+        <activity android:name=".danyanghuawu.DanyangDayActivity" />
+        <activity android:name=".danyanghuawu.DanYangActivity" />
+        <activity android:name=".youyan.YouYanHistryActivity" />
+        <activity android:name=".aqi.AqiHistroyActivity" />
         <activity android:name=".aqi.ZhandianActivity" />
         <activity android:name=".aqi.OneAqiActivity" />
         <activity android:name=".aqi.AqiActivity" />
-
+        <activity android:name=".dongtaiguankong.TaskDetailActivity" />
+        <activity android:name=".dongtaiguankong.StartTaskActivity" />
+        <activity android:name=".dongtaiguankong.EndTaskActivity" />
+        <activity android:name=".dongtaiguankong.JiankongDetaiActivity" />
+        <activity android:name=".dongtaiguankong.histroy.DongtaiZhouActivity" />
+        <activity android:name=".dongtaiguankong.histroy.DongtaiTianActivity" />
+        <activity android:name=".dongtaiguankong.histroy.DongtaiFenActivity" />
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="uGINhsNerwkkqj92GRwP7m41NUrTacat" /> <!-- 注册广播 -->
@@ -77,9 +94,6 @@
             android:screenOrientation="portrait" />
         <activity android:name=".voc.VocActivity" />
         <activity
-            android:name=".ic_card.IcCardActivity"
-            android:theme="@style/Theme.AppCompat" />
-        <activity
             android:name=".advertisement.AdActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppMainTheme" />
@@ -92,17 +106,6 @@
             android:process=":pushservice" />
         <service android:name=".service.DemoIntentService" />
 
-        <activity
-            android:name=".ic_card.IcDeviceStateActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppMainTheme" />
-        <activity
-            android:name=".ic_card.IcDeviceStateActivity1"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppMainTheme" />
-        <activity
-            android:name=".ic_card.IcCardDetalActivity"
-            android:theme="@style/Theme.AppCompat" />
         <activity
             android:name=".ic_card2.ICActivity"
             android:screenOrientation="portrait"
@@ -149,15 +152,6 @@
             android:name=".alarm.AlarmActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppMainTheme" />
-        <activity
-            android:name=".dongtaiguankong.TaskDetailActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".dongtaiguankong.StartTaskActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".dongtaiguankong.EndTaskActivity"
-            android:screenOrientation="portrait" />
         <activity android:name=".autowater.WatorActivity" />
         <activity android:name=".voc.VocHistroyActivity" />
         <activity android:name=".autowater.WatorHistroyActivity" />
@@ -173,6 +167,42 @@
         <activity
             android:name=".the.ZhuangtaiPaidingActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".danyanghuawu.DanyangFenzhongActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".aqi.AqiZhouActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".aqi.AqiTianActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".aqi.AqiFenActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".gongdiyangceng.DayActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".gongdiyangceng.ShiActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".gongdiyangceng.ShifenActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".the.FengzhongHistroyActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".fenbiao.FenbiaoActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".fenbiao.FenbiaoDetailActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".fenbiao.FenbiaoYichangyiceActivity"
+            android:screenOrientation="portrait" >
+        </activity>
     </application>
 
 </manifest>

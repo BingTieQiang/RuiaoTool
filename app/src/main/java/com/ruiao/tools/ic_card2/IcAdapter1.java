@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.ramotion.foldingcell.FoldingCell;
+
 import com.ruiao.tools.R;
 import com.ruiao.tools.notice.NoticeBean;
 

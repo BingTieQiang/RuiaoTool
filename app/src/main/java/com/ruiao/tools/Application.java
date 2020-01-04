@@ -2,28 +2,18 @@ package com.ruiao.tools;
 
 import android.app.Activity;
 import android.app.ActivityManager;
-import android.app.Notification;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.multidex.MultiDex;
-import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 
 
 import com.baidu.mapapi.CoordType;
 import com.baidu.mapapi.SDKInitializer;
-import com.igexin.sdk.PushManager;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.FormatStrategy;
 import com.orhanobut.logger.Logger;
@@ -38,7 +28,6 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
-import com.ruiao.tools.http.OkHttp3Downloader;
 import com.ruiao.tools.http.OkHttpUtils;
 import com.ruiao.tools.http.cookie.persistentcookiejar.ClearableCookieJar;
 import com.ruiao.tools.http.cookie.persistentcookiejar.PersistentCookieJar;
@@ -47,7 +36,8 @@ import com.ruiao.tools.http.cookie.persistentcookiejar.persistence.SharedPrefsCo
 import com.ruiao.tools.http.log.HttpLoggingInterceptor;
 import com.ruiao.tools.utils.CrashHandler;
 import com.ruiao.tools.utils.SimpleActivityLifecycleCallbacks;
-import com.squareup.picasso.Picasso;
+
+
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -86,6 +76,7 @@ public class Application extends android.app.Application {
     @Override
     public void onCreate() {
         super.onCreate();
+
         // 多进程导致多次初始化Application,这里只初始化App主进程的Application
         int pid = android.os.Process.myPid();
         String curProcessName = getAppName(pid);
@@ -111,10 +102,7 @@ public class Application extends android.app.Application {
         instance = this;
         performInit();
         //配置picasso的本地缓存
-        Picasso picasso = new Picasso.Builder(this)
-                .downloader(new OkHttp3Downloader(this))
-                .build();
-        Picasso.setSingletonInstance(picasso);
+
 
         activityList = Collections.synchronizedList(new ArrayList<Activity>());
         registerActivityLifecycleCallbacks(new SimpleActivityLifecycleCallbacks() {
@@ -135,6 +123,7 @@ public class Application extends android.app.Application {
         //自4.3.0起，百度地图SDK所有接口均支持百度坐标和国测局坐标，用此方法设置您使用的坐标类型.
         //包括BD09LL和GCJ02两种坐标，默认是BD09LL坐标。
         SDKInitializer.setCoordType(CoordType.BD09LL);
+
         Logger.d("初始化结束");
 
     }
